@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 // Define the navigation links
 const navigation = [
+    { name: 'Home', href: '/'},
     { name: 'Orders', href: '/orders' },
     { name: 'Query', href: '/query' },
     { name: 'Settings', href: '/settings' },
