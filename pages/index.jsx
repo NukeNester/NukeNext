@@ -1,52 +1,20 @@
 import Image from "next/image";
 import Head from "next/head";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import Hero from "./components/Hero";
 
 
 export default function Index() {
-  return (
-    <>
-      <Head>
-        <title>Spotify Proximity</title>
-        <style>@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap')</style>
-        <link rel="icon" href="https://cdn.freebiesupply.com/logos/large/2x/spotify-2-logo-png-transparent.png" />
-      </Head>
+    return (
+        <>
+            <Head>
+                <title>Home</title>
+                <style>@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap')</style>
+                <link rel="icon" href="https://cdn.discordapp.com/attachments/1230548482725773426/1231067116288081941/image.png?ex=66359b98&is=66232698&hm=84d21462860d268cf9140c33b4a7c739614059f5d359015a78d2122a1a909f40&" />
+            </Head>
 
-      <div className="max-w-screen flex flex-col items-center" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            <Hero />
 
-        <div className="max-w-6xl sm:max-w-3xl pt-10">
-          <h1 className="text-black text-center text-6xl px-6">
-            <span className="text-green-600/90 font-semibold">Spotify</span>Proximity
-          </h1>
-        </div>
+        </>
 
-        <div className="pt-10 max-w-xl text-wrap">
-          <h1 className="text-center mb-5 text-black text-4xl font text-wrap">
-            See what people around you are <span className="font-bold text-green-600/90">listening</span> to...
-          </h1>
-        </div>
-
-        <div className="flex pb-5 gap-x-10">
-          <a href="/api/auth/login" className="bg-gradient-to-b from-green-600/90 to-green-600/80 text-xl text-neutral-100/90 py-3 px-10 rounded-md hover:bg-green-700">
-            Get Started
-          </a>
-
-          <a href="/home" className="bg-gradient-to-b from-gray-600/90 to-gray-600/80 text-xl text-neutral-100/90 py-3 px-5 rounded-md hover:bg-gray-700">
-            Already a User?
-          </a>
-        </div>
-
-
-        <div className="flex pb-48">
-          <div className="flex gap-x-10 snap-x snap-mandatory overflow-x-auto">
-
-
-          </div>
-
-        </div>
-
-      </div>
-    </>
-
-  );
+    );
 }
