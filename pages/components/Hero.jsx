@@ -9,46 +9,63 @@ const navigation = [
 ];
 
 export function Hero() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
-        <div className="relative">
-            <header className="absolute inset-x-0 top-0 z-50">
-                <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-                    <div className="flex-1"></div>
-                    <div className="flex lg:gap-x-12">
+        <div className="">
+            <header className=" z-50">
+
+                <nav className="flex items-center justify-between p-6 px-8" aria-label="Global">
+                    <div className="flex-1">
+                        <p className="text-xl font-semibold leading-6 text-white">
+                            Nuke Nester
+                        </p>
+                    </div>
+
+                    <div className="flex gap-x-12">
                         {navigation.map((item) => (
-                            <Link key={item.name} href={item.href} passHref>
-                                <a className="text-md font-semibold leading-6 text-white">{item.name}</a>
-                            </Link>
+                            <a key={item.name} href={item.href} className="text-md font-semibold leading-6 text-white">
+                                {item.name}
+                            </a>
                         ))}
                     </div>
-                    <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                        <Link href="/login" passHref>
-                            <a className="text-sm font-semibold leading-6 text-white">
-                                Log in <span aria-hidden="true">&rarr;</span>
-                            </a>
-                        </Link>
+                    <div className="lg:flex lg:flex-1 lg:justify-end">
+                        <a href="./api/auth/login" className="text-sm font-semibold leading-6 text-white">
+                            Log in <span aria-hidden="true">&rarr;</span>
+                        </a>
                     </div>
                 </nav>
+                <div />
+
+
             </header>
-            
-            <div className="pt-24">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="text-center">
-                        <h1 className="text-5xl font-bold text-white sm:text-6xl">
-                            Nuke Nester
-                        </h1>
-                        <p className="mt-6 text-lg leading-8 text-gray-300">
-                            A data-driven simulation platform that provides a realistic, hands-on experience for you to become a cybersecurity professional.
-                        </p>
-                        <div className="mt-10 flex justify-center gap-x-6">
-                            <Link href="/register" passHref>
-                                <a className="rounded-md px-6 py-1.5 text-lg font-semibold text-white border border-white hover:bg-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400">
+
+            <div className=" pt-14">
+
+                <div className="py-24 sm:py-32 lg:pb-40">
+                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                        <div className="mx-auto max-w-4xl text-center pb-96">
+                            <h1 className="text-5xl font-bold  text-white sm:text-6xl">
+                                Nuke Nester
+                            </h1>
+                            <p className="mt-6 text-lg leading-8 text-white">
+                                Properly dispose and handle nuclear waste with Nuke Nester.
+                            </p>
+                            <div className="mt-10 flex items-center justify-center gap-x-6 pb-20">
+                                <a
+                                    href="./api/auth/login"
+                                    className="rounded-md px-6 py-1.5 text-lg font-semibold text-white border border-white hover:bg-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                                >
                                     Get started
                                 </a>
-                            </Link>
+                                <a
+                                    href="./api/auth/login"
+                                    className="rounded-md px-6 py-1.5 text-lg font-semibold text-white border border-white hover:bg-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                                >
+                                    Already a User?
+                                </a>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
