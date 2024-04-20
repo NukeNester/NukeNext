@@ -5,6 +5,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import GrayBox from './components/GrayBox'; // Adjust the path as necessary
 import mapboxgl from 'mapbox-gl';
 import Axios from 'axios'; 
+import Header from './components/Header';
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 export default function Query() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -213,14 +214,14 @@ export default function Query() {
 
     return (
         <>
-            <Head>
-                <title>Query Page</title>
-            </Head>
+            <Header />
             <div className="flex flex-col h-screen justify-center items-center bg-gradient-to-b from-gray-300 to-green-400">
+            
                 <div className="text-center p-10 max-w-3xl w-full">
                     <h1 className="text-2xl font-bold text-white">Query Page</h1>
                     <p className="text-sm text-white mt-2">Here you can perform searches or submit queries to find specific information or resources.</p>
                     <div className="mt-4 flex justify-center">
+                    
                         <form className="flex items-center" onSubmit={handleSearchSubmit}>
                             
                             <input

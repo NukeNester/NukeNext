@@ -5,18 +5,12 @@ import EmissionsSaved from './components/EmissionsSaved'; // Ensure the import p
 import LineGraph from './components/LineGraph'; // Ensure the import paths are correct
 import HomeButton from './components/HomeButton'; // Ensure the import paths are correct
 import BarGraph from './components/BarGraph';
-
+import Header from './components/Header';
 export default function Statistics() {
     return (
         <>
-            <Head>
-                <title>Profile Statistics</title>
-            </Head>
+            <Header />
             <div className="relative min-h-screen bg-gradient-to-b from-[#86c6aa] to-gray-200 p-4">
-                {/* Position HomeButton at the top left */}
-                <div className="absolute top-0 left-0 p-4">
-                    <HomeButton />
-                </div>
 
                 {/* Central content */}
                 <div className="flex flex-col items-center justify-center w-full">
