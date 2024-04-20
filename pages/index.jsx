@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 
-export default function Home() {
+export default function Index() {
   return (
     <>
       <Head>
