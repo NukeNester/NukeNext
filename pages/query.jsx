@@ -24,11 +24,8 @@ export default function Query() {
   const [searchQuery, setSearchQuery] = useState("");
   const [map, setMap] = useState(null);
   const [searchResult, setSearchResult] = useState(null); // State to hold search result
-<<<<<<< HEAD
   
-=======
   const [suggestions, setSuggestions] = useState([]);
->>>>>>> ab6c491adc6a83d874fc721fad55fe08d32b1477
 
 
 
