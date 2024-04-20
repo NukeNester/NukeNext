@@ -1,13 +1,14 @@
 import Header from "./components/Header";
 import OrderCard from "./components/OrderCard";
 import React, { useRef, useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import {
   withAuthInfo,
   useLogoutFunction,
   useRedirectFunctions,
   useAuthInfo,
 } from "@propelauth/react";
+import OrderTable from "./components/OrderTable";
 
 export default function Orders() {
   const { loading, isLoggedIn, user } = useAuthInfo();
@@ -16,11 +17,22 @@ export default function Orders() {
   const myRef = useRef(null);
   const getOrders = async () => {
     try {
-      const response = await axios.get(
-        `https://server-iwh0.onrender.com/orders/getOrderByEmail/${user.email}`
-      );
+      let response = null;
+      //If the user is a admin(echen9870@gmail.com)
+      if (user.email == "echen9870@gmail.com") {
+        response = await axios.get(
+          `https://server-iwh0.onrender.com/orders/getAllOrder`
+        );
+        //If the user is a regular person
+      } else {
+        response = await axios.get(
+          `https://server-iwh0.onrender.com/orders/getOrderByEmail/${user.email}`
+        );
+      }
+
       setOrders(response.data);
       console.log(response.data); // Log response.data instead of orders
+      console.log(user);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -28,7 +40,7 @@ export default function Orders() {
 
   useEffect(() => {
     getOrders();
-  }, [user.email]); // Include user.email in the dependency array
+  }, []);
 
   const executeScroll = () => {
     getOrders();
@@ -69,7 +81,7 @@ export default function Orders() {
           </div>
 
           <div className="pb-80 flex justify-center" ref={myRef}>
-            <OrderCard />
+            {orders && <OrderTable orders={orders} isAdmin = {user.email === "echen9870@gmail.com"}/>}
           </div>
         </div>
       </div>
