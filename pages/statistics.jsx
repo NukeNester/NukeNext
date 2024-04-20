@@ -5,13 +5,21 @@ import EmissionsSaved from "./components/EmissionsSaved";
 import LineGraph from "./components/LineGraph";
 import GrayBox from "./components/GrayBox";
 import Header from "./components/Header";
-import { useAuthInfo, useLogoutFunction, useRedirectFunctions } from "@propelauth/react";
+import React, { useRef } from "react";
+import {
+  withAuthInfo,
+  useLogoutFunction,
+  useRedirectFunctions,
+  useAuthInfo,
+} from "@propelauth/react";
 
 export default function Statistics() {
   const { isLoggedIn } = useAuthInfo();
   const logout = useLogoutFunction();
-  const { redirectToLoginPage } = useRedirectFunctions();
-
+  const { redirectToLoginPage, redirectToAccountPage } = useRedirectFunctions();
+  const myRef = useRef(null);
+  const executeScroll = () =>
+    myRef.current.scrollIntoView({ behavior: "smooth" });
   return (
     <>
       <Head>

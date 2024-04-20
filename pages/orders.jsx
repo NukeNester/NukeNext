@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 import mapboxgl from 'mapbox-gl';
 import Axios from 'axios';
+import { useAuthInfo, useLogoutFunction, useRedirectFunctions } from '@propelauth/react';
 
 
 
@@ -24,7 +25,7 @@ export default function Orders() {
     const { loading, isLoggedIn, user } = useAuthInfo();
     const logout = useLogoutFunction();
     const { redirectToLoginPage, redirectToAccountPage } = useRedirectFunctions();
-    
+
     const getOrders = async () => {
         try {
             const response = await axios.get(
@@ -38,8 +39,11 @@ export default function Orders() {
     };
 
     useEffect(() => {
+        if (!isLoggedIn) {
+            window.location.href = "https://14758910.propelauthtest.com/en/login";
+        }
         getOrders();
-    }, [user.email]); // Include user.email in the dependency array
+    }, [user ? user.email : null]); // Include user.email in the dependency array
 
     const executeScroll = () => {
         getOrders();
@@ -64,19 +68,9 @@ export default function Orders() {
         }
     }
 
-
-    useEffect(() => {
-
-    }, []);
-
-
-
-
-
     function wait(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
-
 
     async function runMap() {
         await wait(1);
@@ -119,9 +113,6 @@ export default function Orders() {
     const handlePopupClose = () => {
         setPopupOpen(false);
     }
-
-
-
 
     return (
         <>
