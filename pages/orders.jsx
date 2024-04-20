@@ -38,8 +38,9 @@ const { loading, isLoggedIn, user } = useAuthInfo();
               >
                 View Orders
               </button>
+
+              {/*TODO NEED TO CREATE A PLACE ORDER COMPONENT */}
               <a
-                href="./api/auth/login"
                 className="rounded-md px-6 py-1.5 text-lg font-semibold text-white border border-white hover:bg-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
               >
                 Place an Order
