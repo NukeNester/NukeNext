@@ -13,6 +13,7 @@ import {
   useAuthInfo,
 } from "@propelauth/react";
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+
 export default function Query() {
   const { loading, isLoggedIn, user } = useAuthInfo();
   const logout = useLogoutFunction();
@@ -91,6 +92,9 @@ export default function Query() {
   //   // useEffect to initialize the map
   //   useEffect(() => {
   //     if (process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) { // Only initialize the map if it hasn't been initialized already
+  //   // useEffect to initialize the map
+  //   useEffect(() => {
+  //     if (process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) { // Only initialize the map if it hasn't been initialized already
 
   //       mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN; // Set the access token right before using it
 
@@ -108,7 +112,24 @@ export default function Query() {
   //       // If you are adding controls to the map, it should be done here
   //       newMap.addControl(new mapboxgl.NavigationControl());
   //     }
+  //       mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN; // Set the access token right before using it
 
+  //       const newMap = new mapboxgl.Map({
+  //         container: "map", // Make sure this ID matches the div ID
+  //         style: "mapbox://styles/mapbox/streets-v11",
+  //         center: [-74.006, 40.7128], // Adjust this center as needed for your use case
+  //         zoom: 9,
+  //       });
+
+  //       newMap.on('load', () => {
+  //         setMap(newMap); // When the map is loaded, then set it to the state
+  //       });
+
+  //       // If you are adding controls to the map, it should be done here
+  //       newMap.addControl(new mapboxgl.NavigationControl());
+  //     }
+
+  //   }, []);
   //   }, []);
 
   const drawPolygon = (center, radius, key) => {
@@ -185,6 +206,8 @@ export default function Query() {
   };
   //const mapContainerRef = useRef(null);
   //const [map, setMap] = useState(null);
+  //const mapContainerRef = useRef(null);
+  //const [map, setMap] = useState(null);
 
   // Function to fetch location data from the backend using Axios
   async function fetchLocations() {
@@ -225,9 +248,8 @@ export default function Query() {
       });
     });
 
-    // Clean up on unmount
-    return () => newMap.remove();
   }, []);
+
 
   return (
     <>
@@ -237,7 +259,7 @@ export default function Query() {
         handleLogOut={logout}
       />
       <div className="flex flex-col h-screen justify-center items-center bg-gradient-to-b from-gray-300 to-green-400">
-        <div className="text-center max-w-3xl w-full">
+        <div className="text-center p-5 max-w-3xl w-full">
           <h1 className="text-2xl font-bold text-white">Query Page</h1>
           <p className="text-sm text-white mt-2">
             Here you can perform searches or submit queries to find specific
