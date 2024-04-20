@@ -6,7 +6,7 @@ import Header from './Header';
 const navigation = [
     { name: 'Orders', href: '/orders' },
     { name: 'Query', href: '/query' },
-    { name: 'Settings', href: '/settings' },
+    { name: 'Statistics', href: '/statistics' },
 ];
 
 export function Hero() {

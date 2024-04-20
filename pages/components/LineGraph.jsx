@@ -51,7 +51,7 @@ const options = {
 
 const LineGraph = () => {
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md w-1/3 h-64"> {/* Adjust width to 1/3 and height as necessary */}
+    <div className="bg-white p-2 rounded-lg shadow-lg w-1/2"> {/* Adjust width to 1/3 and height as necessary */}
       <Line data={data} options={options} />
     </div>
   );

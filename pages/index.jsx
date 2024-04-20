@@ -2,7 +2,7 @@ import Image from "next/image";
 import Head from "next/head";
 import Hero from "./components/Hero";
 import {useUser} from "@auth0/nextjs-auth0/client";
-
+import HomeButton from './components/HomeButton';
 
 export default function Index() {
 
@@ -14,6 +14,8 @@ export default function Index() {
                 <style>@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap')</style>
                 <link rel="icon" href="" />
             </Head>
+
+            
 
             <Hero />
         </>);
