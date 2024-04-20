@@ -30,6 +30,7 @@ const OrderTable = ({ orders, isAdmin }) => {
     } catch (error) {
       console.error("Error saving changes:", error);
     }
+    console.log("Successfuly saved all changes")
   };
 
   return (
