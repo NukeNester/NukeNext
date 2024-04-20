@@ -23,7 +23,7 @@ export function Header() {
 
                     <div className="flex gap-x-12">
                         {navigation.map((item) => (
-                            <a key={item.name} href={item.href} className="text-md font-semibold leading-6 text-white">
+                            <a key={item.name} href={item.href} className="text-md font-semibold leading-6 text-white hover:text-gray-100">
                                 {item.name}
                             </a>
                         ))}
