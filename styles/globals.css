@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "~leaflet/dist/leaflet.css";
+
+body {
+  background: linear-gradient(to bottom, #d6d1cf, #92c0ac);
+}
