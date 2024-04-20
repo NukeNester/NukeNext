@@ -7,73 +7,73 @@ import mapboxgl from 'mapbox-gl';
 import Axios from 'axios'; 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 export default function Query() {
-//     const [searchQuery, setSearchQuery] = useState("");
-//   const [map, setMap] = useState(null);
-//   const [searchResult, setSearchResult] = useState(null); // State to hold search result
+    const [searchQuery, setSearchQuery] = useState("");
+  const [map, setMap] = useState(null);
+  const [searchResult, setSearchResult] = useState(null); // State to hold search result
 
-//   // Function to handle search form submission
-//   const handleSearchSubmit = async (event) => {
-//     event.preventDefault();
+  // Function to handle search form submission
+  const handleSearchSubmit = async (event) => {
+    event.preventDefault();
 
-//     try {
-//       // Fetch data from Mapbox Geocoding API
-//       const response = await fetch(
-//         `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery}.json?access_token=${mapboxgl.accessToken}`
-//       );
-//       const data = await response.json();
+    try {
+      // Fetch data from Mapbox Geocoding API
+      const response = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery}.json?access_token=${mapboxgl.accessToken}`
+      );
+      const data = await response.json();
 
-//       // Check if there are any results
-//       if (data.features.length > 0) {
-//         const firstFeature = data.features[0];
-//         const { center, place_name } = firstFeature;
+      // Check if there are any results
+      if (data.features.length > 0) {
+        const firstFeature = data.features[0];
+        const { center, place_name } = firstFeature;
 
-//         //Fly to location on Map
-//         if (map) {
-//           map.flyTo({
-//             center: center,
-//             zoom: 12,
-//           });
-//         }
+        //Fly to location on Map
+        if (map) {
+          map.flyTo({
+            center: center,
+            zoom: 12,
+          });
+        }
 
-//         // Draw a polygon to highlight the area if in United States
-//         drawPolygon(center, 0.05, "1");
+        // Draw a polygon to highlight the area if in United States
+        drawPolygon(center, 0.05, "1");
 
-//         // Set the search result state
-//         setSearchResult({
-//           placeName: place_name,
-//           center: center, // Set the center object
-//         });
+        // Set the search result state
+        setSearchResult({
+          placeName: place_name,
+          center: center, // Set the center object
+        });
 
-//         // You can update state or display this information in your UI as needed
-//       } else {
-//         console.log("No results found");
-//         setSearchResult(null); // Clear search result state
-//       }
-//     } catch (error) {
-//       console.error("Error fetching data:", error);
-//       setSearchResult(null); // Clear search result state
-//     }
-//   };
+        // You can update state or display this information in your UI as needed
+      } else {
+        console.log("No results found");
+        setSearchResult(null); // Clear search result state
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setSearchResult(null); // Clear search result state
+    }
+  };
 
-//   // Function to handle search input change
-//   const handleSearchChange = (event) => {
-//     setSearchQuery(event.target.value);
-//   };
+  // Function to handle search input change
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
-//   // Function to render search result information
-//   const renderSearchResult = () => {
-//     if (searchResult) {
-//       return (
-//         <div>
-//           <h3>Search Result</h3>
-//           <p>Place Name: {searchResult.placeName}</p>
-//           <p>Latitude: {searchResult.latitude}</p>
-//           <p>Longitude: {searchResult.longitude}</p>
-//         </div>
-//       );
-//     }
-//     return null;
-//   };
+  // Function to render search result information
+  const renderSearchResult = () => {
+    if (searchResult) {
+      return (
+        <div>
+          <h3>Search Result</h3>
+          <p>Place Name: {searchResult.placeName}</p>
+          <p>Latitude: {searchResult.latitude}</p>
+          <p>Longitude: {searchResult.longitude}</p>
+        </div>
+      );
+    }
+    return null;
+  };
 
 //   // useEffect to initialize the map
 //   useEffect(() => {
@@ -98,85 +98,87 @@ export default function Query() {
 
 //   }, []);
 
-//   const drawPolygon = (center, radius, key) => {
-//     //TODO FIX THIS
-//     // List of sources to exclude from removal
+  const drawPolygon = (center, radius, key) => {
+    //TODO FIX THIS
+    // List of sources to exclude from removal
 
-//     // Remove all existing layers except excluded layers
-//     Object.keys(map.getStyle().sources).forEach((source) => {
-//       if (source == key) {
-//         const layerId = map.getStyle().layers.find(layer => layer.source === source)?.id;
-//         if (layerId) {
-//           map.removeLayer(layerId);
-//         }
-//         map.removeSource(source);
-//       }
-//     });
+    // Remove all existing layers except excluded layers
+    Object.keys(map.getStyle().sources).forEach((source) => {
+      if (source == key) {
+        const layerId = map.getStyle().layers.find(layer => layer.source === source)?.id;
+        if (layerId) {
+          map.removeLayer(layerId);
+        }
+        map.removeSource(source);
+      }
+    });
 
-//     //TODO
-//     //Create a query that gets all order within a circle distance of the specified location
-//     //Return a list of all orders that match this query
-//     //Create a map function iterating through the list, where each sourceID is is tied to the index,
-//     //Create a circle based on the position for each index.
-//     //Radius should be based on quantity and type?
+    //TODO
+    //Create a query that gets all order within a circle distance of the specified location
+    //Return a list of all orders that match this query
+    //Create a map function iterating through the list, where each sourceID is is tied to the index,
+    //Create a circle based on the position for each index.
+    //Radius should be based on quantity and type?
 
-//     // Generate coordinates for the circular polygon
-//     const coordinates = generateCircleCoordinates(center, 0.01);
+    // Generate coordinates for the circular polygon
+    const coordinates = generateCircleCoordinates(center, 0.01);
 
-//     //Add the layers to the map
-//     addPolygonLayer(map, key, key, coordinates);
-//   };
+    //Add the layers to the map
+    addPolygonLayer(map, key, key, coordinates);
+  };
 
-//   // Add the source and layer
-//   const addPolygonLayer = (map, sourceId, layerId, coordinates) => {
-//     map
-//       .addSource(sourceId, {
-//         type: "geojson",
-//         data: {
-//           type: "Feature",
-//           geometry: {
-//             type: "Polygon",
-//             coordinates: [coordinates],
-//           },
-//         },
-//       })
-//       .addLayer({
-//         id: layerId,
-//         type: "fill",
-//         source: sourceId,
-//         layout: {},
-//         paint: {
-//           "fill-color": "blue",
-//           "fill-opacity": 0.5,
-//         },
-//       });
-//   };
+  // Add the source and layer
+  const addPolygonLayer = (map, sourceId, layerId, coordinates) => {
+    map
+      .addSource(sourceId, {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: [coordinates],
+          },
+        },
+      })
+      .addLayer({
+        id: layerId,
+        type: "fill",
+        source: sourceId,
+        layout: {},
+        paint: {
+          "fill-color": "blue",
+          "fill-opacity": 0.5,
+        },
+      });
+  };
 
-//   // Function to generate coordinates for a circular polygon
-//   const generateCircleCoordinates = (center, radius) => {
-//     const coordinates = [];
-//     const numSegments = 64; // Number of line segments to approximate the circle
+  // Function to generate coordinates for a circular polygon
+  const generateCircleCoordinates = (center, radius) => {
+    const coordinates = [];
+    const numSegments = 64; // Number of line segments to approximate the circle
 
-//     for (let i = 0; i < numSegments; i++) {
-//       const angle = (i / numSegments) * Math.PI * 2;
-//       const x = center[0] + radius * Math.cos(angle);
-//       const y = center[1] + radius * Math.sin(angle);
-//       coordinates.push([x, y]);
-//     }
+    for (let i = 0; i < numSegments; i++) {
+      const angle = (i / numSegments) * Math.PI * 2;
+      const x = center[0] + radius * Math.cos(angle);
+      const y = center[1] + radius * Math.sin(angle);
+      coordinates.push([x, y]);
+    }
 
-//     // Close the polygon by repeating the first coordinate
-//     coordinates.push(coordinates[0]);
-//     return coordinates;
-//   };
+    // Close the polygon by repeating the first coordinate
+    coordinates.push(coordinates[0]);
+    return coordinates;
+  };
  //const mapContainerRef = useRef(null);
-    const [map, setMap] = useState(null);
+    //const [map, setMap] = useState(null);
 
     // Function to fetch location data from the backend using Axios
     async function fetchLocations() {
         try {
             const response = await Axios.get('https://server-iwh0.onrender.com/orders/getOrderByArea', {
-                topLeft: [-73.9876, 40.7661], // Specify the actual coordinates for the top left corner
-                bottomRight: [-74.0083, 40.7412] // Specify the actual coordinates for the bottom right corner
+                params: {
+                    topLeft:  [-79.4877, 39.7220], // Specify the actual coordinates for the top left corner
+                    bottomRight: [-75.0487, 37.9117]
+                }
             });
             return response.data; // Accessing data directly from Axios response
         } catch (error) {
@@ -219,7 +221,7 @@ export default function Query() {
                     <h1 className="text-2xl font-bold text-white">Query Page</h1>
                     <p className="text-sm text-white mt-2">Here you can perform searches or submit queries to find specific information or resources.</p>
                     <div className="mt-4 flex justify-center">
-                        {/* <form className="flex items-center" onSubmit={handleSearchSubmit}>
+                        <form className="flex items-center" onSubmit={handleSearchSubmit}>
                             
                             <input
                                 type="text"
@@ -234,8 +236,8 @@ export default function Query() {
                             >
                                 Search
                             </button>
-                        </form> */}
-                        {/* {renderSearchResult()} */}
+                        </form>
+                        {renderSearchResult()}
                     </div>
                 </div>
                 {/* <div ref={mapContainerRef} style={{ height: '400px', width: '75%' }} /> */}
