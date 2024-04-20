@@ -237,7 +237,7 @@ export default function Query() {
         handleLogOut={logout}
       />
       <div className="flex flex-col h-screen justify-center items-center bg-gradient-to-b from-gray-300 to-green-400">
-        <div className="text-center p-5 max-w-3xl w-full">
+        <div className="text-center max-w-3xl w-full">
           <h1 className="text-2xl font-bold text-white">Query Page</h1>
           <p className="text-sm text-white mt-2">
             Here you can perform searches or submit queries to find specific
