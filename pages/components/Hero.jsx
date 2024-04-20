@@ -49,7 +49,7 @@ export function Hero() {
                             <h1 className="text-5xl font-bold  text-white sm:text-6xl">
                                 Nuke Nester
                             </h1>
-                            <p className="mt-6 text-lg leading-8 text-gray-300">
+                            <p className="mt-6 text-lg leading-8 text-white">
                                 Properly dispose and handle nuclear waste with Nuke Nester.
                             </p>
                             <div className="mt-10 flex items-center justify-center gap-x-6 pb-20">
