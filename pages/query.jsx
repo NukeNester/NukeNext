@@ -24,7 +24,17 @@ export default function Query() {
   const [searchQuery, setSearchQuery] = useState("");
   const [map, setMap] = useState(null);
   const [searchResult, setSearchResult] = useState(null); // State to hold search result
+  
 
+
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      window.location.href = "https://14758910.propelauthtest.com/en/login";
+    }
+  }, []);
+
+  
   // Function to handle search form submission
   const handleSearchSubmit = async (event) => {
     event.preventDefault();
@@ -248,9 +258,6 @@ export default function Query() {
       });
     });
 
-    // Clean up on unmount
-    return () => newMap.remove();
-  }, []);
     // Clean up on unmount
     return () => newMap.remove();
   }, []);

@@ -6,7 +6,7 @@ import LineGraph from "./components/LineGraph"; // Ensure the import paths are c
 import HomeButton from "./components/HomeButton"; // Ensure the import paths are correct
 import BarGraph from "./components/BarGraph";
 import Header from "./components/Header";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import {
   withAuthInfo,
   useLogoutFunction,
@@ -21,6 +21,12 @@ export default function Statistics() {
   const myRef = useRef(null);
   const executeScroll = () =>
     myRef.current.scrollIntoView({ behavior: "smooth" });
+
+    useEffect(() => {
+      if (!isLoggedIn) {
+        window.location.href = "https://14758910.propelauthtest.com/en/login";
+      }
+    }, []);
   return (
     <>
       <Header
