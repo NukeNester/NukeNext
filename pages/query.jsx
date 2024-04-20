@@ -1,26 +1,22 @@
-// pages/Query.jsx
 "use client";
-import Head from "next/head";
 import React, { useRef, useEffect, useState } from "react";
-import GrayBox from "./components/GrayBox"; // Adjust the path as necessary
+import Head from "next/head";
 import mapboxgl from "mapbox-gl";
 import Axios from "axios";
 import Header from "./components/Header";
 import {
-  withAuthInfo,
+  useAuthInfo,
   useLogoutFunction,
   useRedirectFunctions,
-  useAuthInfo,
 } from "@propelauth/react";
+import 'mapbox-gl/dist/mapbox-gl.css';
+
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
 export default function Query() {
-  const { loading, isLoggedIn, user } = useAuthInfo();
+  const { isLoggedIn, user } = useAuthInfo();
   const logout = useLogoutFunction();
-  const { redirectToLoginPage, redirectToAccountPage } = useRedirectFunctions();
-  const myRef = useRef(null);
-  const executeScroll = () =>
-    myRef.current.scrollIntoView({ behavior: "smooth" });
+  const { redirectToLoginPage } = useRedirectFunctions();
   const [searchQuery, setSearchQuery] = useState("");
   const [map, setMap] = useState(null);
   const [searchResult, setSearchResult] = useState(null); // State to hold search result
@@ -48,73 +44,70 @@ export default function Query() {
   const handleSearchSubmit = async (event) => {
     event.preventDefault();
     try {
-        // Fetch data from Mapbox Geocoding API
-        const response = await fetch(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery}.json?access_token=${mapboxgl.accessToken}`
-        );
-        const data = await response.json();
-  
-        // Check if there are any results
-        if (data.features.length > 0) {
-          const firstFeature = data.features[0];
-          const { center, place_name } = firstFeature;
-  
-          //Fly to location on Map
-          if (map) {
-            map.flyTo({
-              center: center,
-              zoom: 12,
-            });
-          }
-          drawPolygon(searchResult.center, 0.05, "highlight-area");
-          // Draw a polygon to highlight the area if in United States
-        //   drawPolygon(center, 0.05, "1");
-  
-          // Set the search result state
-          setSearchResult({
-            placeName: place_name,
-            center: center, // Set the center object
-          });
-  
-          // You can update state or display this information in your UI as needed
-        } else {
-          console.log("No results found");
-          setSearchResult(null); // Clear search result state
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setSearchResult(null); // Clear search result state
+      const response = await Axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery}.json`,
+        { params: { access_token: mapboxgl.accessToken } }
+      );
+      const data = response.data;
+      if (data.features.length > 0) {
+        const firstFeature = data.features[0];
+        setMapFocus(firstFeature.center, 12, 'red');
+        setSearchResult({
+          placeName: firstFeature.place_name,
+          latitude: firstFeature.center[1],
+          longitude: firstFeature.center[0],
+        });
+      } else {
+        console.log("No results found");
+        setSearchResult(null);
       }
-  };
-  const selectSuggestion = (place) => {
-    setSearchQuery(place.place_name);
-    setSearchResult({
-      placeName: place.place_name,
-      latitude: place.center[1],
-      longitude: place.center[0],
-      description: "This is a description for the selected location. It's a great place to visit!"  // Static description, replace with dynamic content if available
-    });
-    setSuggestions([]);
-    if (map) {
-      map.flyTo({
-        center: place.center,
-        zoom: 12,
-      });
-      drawPolygon(place.center, 0.05, "highlight-area");
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setSearchResult(null);
     }
   };
 
-  // Function to render search result information
+  const setMapFocus = (center, zoom, color) => {
+    new mapboxgl.Marker({ color: color })
+      .setLngLat(center)
+      .addTo(map);
+    map.flyTo({
+      center: center,
+      zoom: zoom,
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+    });
+  };
+
+  useEffect(() => {
+    const newMap = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [-74.006, 40.7128],
+      zoom: 10,
+    });
+
+    newMap.on("load", async () => {
+      setMap(newMap);
+      newMap.addControl(new mapboxgl.NavigationControl());
+    });
+
+    return () => newMap.remove();
+  }, []);
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
   const renderSearchResult = () => {
     if (searchResult) {
-    //   return (
-    //     <div>
-    //       <h3>Search Result</h3>
-    //       <p>Place Name: {searchResult.placeName}</p>
-    //       <p>Latitude: {searchResult.latitude}</p>
-    //       <p>Longitude: {searchResult.longitude}</p>
-    //     </div>
-    //   );
+      return (
+        <div>
+          <h3>Search Result</h3>
+          <p>Place Name: {searchResult.placeName}</p>
+          <p>Latitude: {searchResult.latitude}</p>
+          <p>Longitude: {searchResult.longitude}</p>
+        </div>
+      );
     }
     return null;
   };
@@ -283,17 +276,15 @@ export default function Query() {
 
   return (
     <>
-      <Header
-        isLoggedIn={isLoggedIn}
-        handleLogIn={redirectToLoginPage}
-        handleLogOut={logout}
-      />
+      <Header isLoggedIn={isLoggedIn} handleLogIn={redirectToLoginPage} handleLogOut={logout} />
+      <Head>
+        <title>Query Page</title>
+      </Head>
       <div className="flex flex-col h-screen justify-center items-center bg-gradient-to-b from-gray-300 to-green-400">
         <div className="text-center p-5 max-w-3xl w-full">
           <h1 className="text-2xl font-bold text-white">Query Page</h1>
           <p className="text-sm text-white mt-2">
-            Here you can perform searches or submit queries to find specific
-            information or resources.
+            Here you can perform searches or submit queries to find specific information or resources.
           </p>
           <div className="mt-4 flex justify-center">
             <form className="flex items-center" onSubmit={handleSearchSubmit}>
@@ -311,25 +302,10 @@ export default function Query() {
                 Search
               </button>
             </form>
-            {/* {renderSearchResult()} */}
-            <ul className="absolute z-10 list-none bg-white rounded shadow-lg mt-2 w-48">
-              {suggestions.map((suggestion) => (
-                <li key={suggestion.id} className="w-48 p-2 hover:bg-gray-300 cursor-pointer" onClick={() => selectSuggestion(suggestion)}>
-                  {suggestion.place_name}
-                </li>
-              ))}
-            </ul>
-            {searchResult && (
-              <div className="mt-4">
-                <h3>{searchResult.placeName}</h3>
-                <p>{searchResult.description}</p>
-              </div>
-            )}
+            {renderSearchResult()}
           </div>
         </div>
-        {/* <div ref={mapContainerRef} style={{ height: '400px', width: '75%' }} /> */}
-        <div id="map" style={{ height: "400px", width: "75%" }} />
-        {/* <GrayBox /> */}
+        <div ref={mapContainerRef} style={{ height: "400px", width: "75%" }} />
       </div>
     </>
   );
