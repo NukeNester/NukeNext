@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Header from './Header';
-import Header from './Header';
 
 
 export function Hero() {
@@ -9,7 +8,7 @@ export function Hero() {
     return (
         <div className="">
             <Header/>
-            <div className=" pt-14">
+            <div className="pt-14">
 
                 <div className="py-24 sm:py-32 lg:pb-40">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">

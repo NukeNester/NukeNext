@@ -1,4 +1,6 @@
 // pages/Statistics.jsx
+import Header from './components/Header';
+
 import Head from 'next/head';
 import WasteStats from './components/WasteStats'; // Ensure the import paths are correct
 import EmissionsSaved from './components/EmissionsSaved'; // Ensure the import paths are correct
@@ -12,11 +14,9 @@ export default function Statistics() {
             <Head>
                 <title>Profile Statistics</title>
             </Head>
-            <div className="relative min-h-screen bg-gradient-to-b from-[#86c6aa] to-gray-200 p-4">
-                {/* Position HomeButton at the top left */}
-                <div className="absolute top-0 left-0 p-4">
-                    <HomeButton />
-                </div>
+            <Header />
+            <div className="relative min-h-screen  p-4">
+
 
                 {/* Central content */}
                 <div className="flex flex-col items-center justify-center w-full">
@@ -27,14 +27,14 @@ export default function Statistics() {
                         <WasteStats />
                         <EmissionsSaved />
                     </div>
-                
-                            <LineGraph />
-                            
-                    
-                           
+
+                    <LineGraph />
+
+
+
                 </div>
-                
-                    
+
+
             </div>
         </>
     );

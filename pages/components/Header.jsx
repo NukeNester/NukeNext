@@ -4,7 +4,7 @@ import HomeButton from './HomeButton'; // Make sure the import path is correct
 
 // Define the navigation links
 const navigation = [
-    { name: 'Home', href: '/'},
+    { name: 'Home', href: '/' },
     { name: 'Orders', href: '/orders' },
     { name: 'Query', href: '/query' },
     { name: 'Statistics', href: '/statistics' },
@@ -14,7 +14,7 @@ export function Header() {
     return (
         <header className="z-50">
             <nav className="flex items-center justify-between p-6 px-8" aria-label="Global">
-                <div className="flex-1">
+                <div className="flex-1 hidden lg:block">
                     <HomeButton />
                 </div>
 
