@@ -168,21 +168,18 @@ export default function Query() {
     coordinates.push(coordinates[0]);
     return coordinates;
   };
-    const mapContainerRef = useRef(null);
-    // const [map, setMap] = useState(null);
+ //const mapContainerRef = useRef(null);
+    //const [map, setMap] = useState(null);
 
     // Function to fetch location data from the backend using Axios
     async function fetchLocations() {
         try {
             const response = await Axios.get('https://server-iwh0.onrender.com/orders/getOrderByArea', {
-            params: {
-                topLeft:  [-79.4877, 39.7220], // Specify the actual coordinates for the top left corner
-                bottomRight: [-75.0487, 37.9117]
-
-            }    
-            
+                params: {
+                    topLeft:  [-79.4877, 39.7220], // Specify the actual coordinates for the top left corner
+                    bottomRight: [-75.0487, 37.9117]
+                }
             });
-            console.log(response.data);
             return response.data; // Accessing data directly from Axios response
         } catch (error) {
             console.error('Failed to fetch locations', error);

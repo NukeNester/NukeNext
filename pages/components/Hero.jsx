@@ -3,12 +3,6 @@ import Link from 'next/link';
 import Header from './Header';
 import Header from './Header';
 
-// Define the navigation links
-const navigation = [
-    { name: 'Orders', href: '/orders' },
-    { name: 'Query', href: '/query' },
-    { name: 'Settings', href: '/settings' },
-];
 
 export function Hero() {
 
