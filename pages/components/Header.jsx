@@ -1,4 +1,5 @@
-
+import { useState } from 'react';
+import Link from 'next/link';
 
 // Define the navigation links
 const navigation = [
@@ -10,6 +11,7 @@ const navigation = [
 export function Header() {
 
     return (
+        
             <header className=" z-50">
 
                 <nav className="flex items-center justify-between p-6 px-8" aria-label="Global">
@@ -27,7 +29,7 @@ export function Header() {
                         ))}
                     </div>
                     <div className="lg:flex lg:flex-1 lg:justify-end">
-                        <a href="./api/auth/login" className="text-sm font-semibold leading-6 text-white hover:text-gray-100">
+                        <a href="./api/auth/login" className="text-sm font-semibold leading-6 text-white">
                             Log in <span aria-hidden="true">&rarr;</span>
                         </a>
                     </div>
@@ -37,8 +39,10 @@ export function Header() {
 
             </header>
 
-           
     );
 }
 
 export default Header;
+
+
+

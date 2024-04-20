@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Header from './Header';
+import Header from './Header';
 
 // Define the navigation links
 const navigation = [
@@ -13,8 +14,7 @@ export function Hero() {
 
     return (
         <div className="">
-            <Header />
-
+            <Header/>
             <div className=" pt-14">
 
                 <div className="py-24 sm:py-32 lg:pb-40">
