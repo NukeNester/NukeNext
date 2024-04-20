@@ -171,13 +171,10 @@ function GrayBox() {
 
     return (
         
-        <div className="bg-white w-3/4 h-3/4 rounded-lg shadow flex justify-center items-center">
-
-            {/* Placeholder for map or other content */}
-            {/* <div id="map" style={{ height: 400 }} /> */}
-            
-            <div id="map" style={{ height: "575px", width: "100%" }} />
-        </div>
+      <div className="bg-white w-full h-3/4 rounded-lg shadow flex justify-center items-center">
+      {/* Placeholder for map or other content */}
+      <div id="map" style={{ height: "575px", width: "100%" }} />
+    </div>
     );
 }
 

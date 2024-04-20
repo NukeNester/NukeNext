@@ -1,0 +1,12 @@
+/* Logo.module.css */
+/* Logo.module.css */
+.fade-appear {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1500ms ease-out, transform 1500ms ease-out;
+}
+
+.fade-appear-active {
+  opacity: 1;
+  transform: translateY(0);
+}
