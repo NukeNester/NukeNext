@@ -7,7 +7,7 @@ export function OrderCard() {
     return (
 
         <div className="bg-white shadow-lg rounded-lg overflow-hidden max-w-3xl">
-            <div className="bg-gray-200 text-center py-4">
+            <div className="bg-white text-center py-4">
                 <h1 className="text-2xl font-bold text-gray-800">Order #1</h1>
             </div>
             <div className=" flex justify-center gap-x-10">
@@ -29,7 +29,7 @@ export function OrderCard() {
                     </div>
                 </div>
             </div>
-            <div className="bg-gray-200 text-center py-4">
+            <div className="bg-white text-center py-4">
                 <a className="text-gray-800 font-semibold">View Order</a>
 
             </div>
