@@ -251,9 +251,7 @@ export default function Query() {
     // Clean up on unmount
     return () => newMap.remove();
   }, []);
-    // Clean up on unmount
-    return () => newMap.remove();
-  }, []);
+   
 
   return (
     <>
