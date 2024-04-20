@@ -168,7 +168,7 @@ export default function Query() {
 //     coordinates.push(coordinates[0]);
 //     return coordinates;
 //   };
- const mapContainerRef = useRef(null);
+ //const mapContainerRef = useRef(null);
     const [map, setMap] = useState(null);
 
     // Function to fetch location data from the backend using Axios
@@ -187,7 +187,7 @@ export default function Query() {
 
     useEffect(() => {
         const newMap = new mapboxgl.Map({
-            container: mapContainerRef.current,
+            container: "map",
             style: 'mapbox://styles/mapbox/streets-v11',
             center: [-74.006, 40.7128], // Central coordinates of the map
             zoom: 10
@@ -238,8 +238,8 @@ export default function Query() {
                         {/* {renderSearchResult()} */}
                     </div>
                 </div>
-                <div ref={mapContainerRef} style={{ height: '400px', width: '75%' }} />
-                {/* <div id="map" style={{ height: "400px", width: "75%" }} /> */}
+                {/* <div ref={mapContainerRef} style={{ height: '400px', width: '75%' }} /> */}
+                <div id="map" style={{ height: "400px", width: "75%" }} />
                 {/* <GrayBox /> */}
             </div>
         </>
