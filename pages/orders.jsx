@@ -1,20 +1,42 @@
 import Header from "./components/Header";
 import OrderCard from "./components/OrderCard";
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import axios from 'axios';
 import {
   withAuthInfo,
   useLogoutFunction,
   useRedirectFunctions,
-  useAuthInfo
+  useAuthInfo,
 } from "@propelauth/react";
 
 export default function Orders() {
-const { loading, isLoggedIn, user } = useAuthInfo();
+  const { loading, isLoggedIn, user } = useAuthInfo();
   const logout = useLogoutFunction();
   const { redirectToLoginPage, redirectToAccountPage } = useRedirectFunctions();
   const myRef = useRef(null);
-  const executeScroll = () =>
+  const getOrders = async () => {
+    try {
+      const response = await axios.get(
+        `https://server-iwh0.onrender.com/orders/getOrderByEmail/${user.email}`
+      );
+      setOrders(response.data);
+      console.log(response.data); // Log response.data instead of orders
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getOrders();
+  }, [user.email]); // Include user.email in the dependency array
+
+  const executeScroll = () => {
+    getOrders();
     myRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const [orders, setOrders] = useState(null);
+
   return (
     <>
       <Header
@@ -40,9 +62,7 @@ const { loading, isLoggedIn, user } = useAuthInfo();
               </button>
 
               {/*TODO NEED TO CREATE A PLACE ORDER COMPONENT */}
-              <a
-                className="rounded-md px-6 py-1.5 text-lg font-semibold text-white border border-white hover:bg-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
-              >
+              <a className="rounded-md px-6 py-1.5 text-lg font-semibold text-white border border-white hover:bg-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400">
                 Place an Order
               </a>
             </div>
