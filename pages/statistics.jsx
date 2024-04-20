@@ -1,4 +1,3 @@
-import React from 'react';
 import Head from "next/head";
 import WasteStats from "./components/WasteStats";
 import EmissionsSaved from "./components/EmissionsSaved";
