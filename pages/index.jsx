@@ -1,4 +1,4 @@
-import Image from "next/image";
+//import Image from "next/image";
 import Head from "next/head";
 import Hero from "./components/Hero";
 import {useUser} from "@auth0/nextjs-auth0/client";

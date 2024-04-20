@@ -20,7 +20,7 @@ export function Header() {
                 <div className="flex gap-x-12">
                     {navigation.map((item) => (
                         <Link key={item.name} href={item.href} passHref>
-                            <span className="text-md font-semibold leading-6 text-white hover:text-gray-100 cursor-pointer">
+                            <span className="text-md font-semibold leading-6 text-neutral-700 hover:text-gray-100 cursor-pointer">
                                 {item.name}
                             </span>
                         </Link>
@@ -28,7 +28,7 @@ export function Header() {
                 </div>
                 <div className="lg:flex lg:flex-1 lg:justify-end">
                     <Link href="/api/auth/login" passHref>
-                        <span className="text-sm font-semibold leading-6 text-white cursor-pointer">
+                        <span className="text-sm font-semibold leading-6 text-neutral-700 cursor-pointer">
                             Log in <span aria-hidden="true">&rarr;</span>
                         </span>
                     </Link>

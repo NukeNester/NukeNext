@@ -14,13 +14,15 @@
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
     "dotenv": "^16.4.5",
+    "framer-motion": "^11.1.7",
     "leaflet": "^1.9.4",
     "mapbox-gl": "^3.3.0",
     "next": "14.1.4",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
-    "react-map-gl": "^7.1.7"
+    "react-map-gl": "^7.1.7",
+    "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
