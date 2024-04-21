@@ -1,10 +1,8 @@
-// pages/Statistics.jsx
 import Head from "next/head";
-import WasteStats from "./components/WasteStats"; // Ensure the import paths are correct
-import EmissionsSaved from "./components/EmissionsSaved"; // Ensure the import paths are correct
-import LineGraph from "./components/LineGraph"; // Ensure the import paths are correct
-import HomeButton from "./components/HomeButton"; // Ensure the import paths are correct
-import BarGraph from "./components/BarGraph";
+import WasteStats from "./components/WasteStats";
+import EmissionsSaved from "./components/EmissionsSaved";
+import LineGraph from "./components/LineGraph";
+import GrayBox from "./components/GrayBox";
 import Header from "./components/Header";
 import React, { useRef } from "react";
 import {
@@ -15,7 +13,7 @@ import {
 } from "@propelauth/react";
 
 export default function Statistics() {
-  const { loading, isLoggedIn, user } = useAuthInfo();
+  const { isLoggedIn } = useAuthInfo();
   const logout = useLogoutFunction();
   const { redirectToLoginPage, redirectToAccountPage } = useRedirectFunctions();
   const myRef = useRef(null);
@@ -23,25 +21,33 @@ export default function Statistics() {
     myRef.current.scrollIntoView({ behavior: "smooth" });
   return (
     <>
-      <Header
-        isLoggedIn={isLoggedIn}
-        handleLogIn={redirectToLoginPage}
-        handleLogOut={logout}
-      />
+      <Head>
+        <title>Profile Statistics</title>
+      </Head>
+      <Header isLoggedIn={isLoggedIn} handleLogIn={redirectToLoginPage} handleLogOut={logout} />
       <div className="relative min-h-screen bg-gradient-to-b from-[#86c6aa] to-gray-200 p-4">
-        {/* Central content */}
-        <div className="flex flex-col items-center justify-center w-full">
+        {/* Reduced top margin for title and header */}
+        <div className="flex flex-col items-center mt-2"> {/* Reduced margin-top from mt-8 to mt-2 */}
           <h1 className="text-3xl font-bold text-white mb-4">
             Profile Statistics
           </h1>
-          <p className="text-white mb-6">View your profile statistics</p>
-          {/* Stats Container */}
-          <div className="flex flex-wrap justify-center gap-4 mb-6">
-            <WasteStats />
-            <EmissionsSaved />
+        </div>
+        
+        {/* Main content */}
+        <div className="flex justify-between items-start">
+          {/* Left column for stats */}
+          <div className="flex flex-col gap-4 w-1/2 p-4">
+            <div className="flex justify-between">
+              <WasteStats />
+              <EmissionsSaved />
+            </div>
+            <LineGraph />
           </div>
-
-          <LineGraph />
+          
+          {/* Right column for the map */}
+          <div className="w-1/2 p-4" style={{ height: '70%' }}>
+            <GrayBox />
+          </div>
         </div>
       </div>
     </>

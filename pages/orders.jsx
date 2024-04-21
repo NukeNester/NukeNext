@@ -102,7 +102,7 @@ export default function Orders() {
             </div>
           </div>
           <div className="pb-80 flex justify-center" ref={myRef}>
-            {orders && <OrderTable orders={orders} />}
+            {orders && <OrderTable orders={orders} organizationName = {user.email}/>}
           </div>
         </div>
       </div>
