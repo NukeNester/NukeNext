@@ -59,7 +59,7 @@ export default function Orders() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      window.location.href = "https://14758910.propelauthtest.com/en/login";
+      return;
     }
     if (!user) {
       return;

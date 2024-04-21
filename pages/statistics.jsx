@@ -24,7 +24,7 @@ export default function Statistics() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      window.location.href = "https://14758910.propelauthtest.com/en/login";
+      return;
     }
   }, []);
 
