@@ -9,10 +9,9 @@ const EmissionsSaved = ({ wasteData }) => {
 
   return (
     <div className="bg-white p-3 rounded-xl shadow-lg flex flex-col items-center">
-      <h2 className="text-lg font-semibold text-gray-800 mb-3">Greenhouse Emissions Prevented</h2>
+      <h2 className="text-lg font-semibold text-gray-800 mb-3">Emissions Stopped</h2>
       <p className="text-2xl font-bold text-blue-600">{totalCO2Avoided.toLocaleString()}</p>
       <p className="text-sm font-bold text-blue-600">Tons of CO2</p>
-      <p className="text-sm text-gray-500 mt-1">Contribution to reducing global warming</p>
     </div>
   );
 };
