@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 const OrderTable = ({ orders, isAdmin }) => {
+
   const [editedOrders, setEditedOrders] = useState({});
 
-  const handleStatusChange = (orderId, newStatus, isAdmin) => {
+  const handleStatusChange = (orderId, newStatus) => {
+    console.log(orderId);
+    console.log(newStatus);
     setEditedOrders((prevOrders) => ({
       ...prevOrders,
       [orderId]: newStatus,
     }));
-    console.log(editedOrders);
   };
 
+  useEffect(() => {
+    console.log("Current edited orders:", editedOrders);
+  }, [editedOrders]);
   const handleSaveChanges = async () => {
     try {
       // Convert the object into an array of objects with ID and status properties
@@ -24,13 +29,10 @@ const OrderTable = ({ orders, isAdmin }) => {
           `https://server-iwh0.onrender.com/orders/updateOrderByID/${order.id}/${order.status}`
         );
       }
-
-      // Reset editedOrders state after saving changes
-      setEditedOrders({});
     } catch (error) {
       console.error("Error saving changes:", error);
     }
-    console.log("Successfuly saved")
+    console.log("Successfuly saved");
   };
 
   return (

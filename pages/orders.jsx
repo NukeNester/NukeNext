@@ -22,10 +22,18 @@ export default function Orders() {
   const myRef = useRef(null);
 
   const getOrders = async () => {
+    let response = null;
     try {
-      const response = await axios.get(
-        `https://server-iwh0.onrender.com/orders/getOrderByEmail/${user.email}`
-      );
+      if (user.email == "echen9870@gmail.com") {
+        console.log("Getting all orders")
+        response = await axios.get(
+          "https://server-iwh0.onrender.com/orders/getAllOrder"
+        );
+      } else {
+        response = await axios.get(
+          `https://server-iwh0.onrender.com/orders/getOrderByEmail/${user.email}`
+        );
+      }
       setOrders(response.data);
       console.log(response.data);
     } catch (error) {
@@ -73,7 +81,10 @@ export default function Orders() {
             />
           </Transition.Child>
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 text-center sm:block sm:p-0">
-            <OrderForm organizationName = {user.email} handlePopupClose={() => setPopupOpen(false)} />
+            <OrderForm
+              organizationName={user.email}
+              handlePopupClose={() => setPopupOpen(false)}
+            />
           </div>
         </Dialog>
       </Transition.Root>
@@ -102,7 +113,13 @@ export default function Orders() {
             </div>
           </div>
           <div className="pb-80 flex justify-center" ref={myRef}>
-            {orders && <OrderTable orders={orders} organizationName = {user.email} isAdmin={user.email == "echen9870@gmail.com"}/>}
+            {orders && (
+              <OrderTable
+                orders={orders}
+                organizationName={user.email}
+                isAdmin={user.email == "echen9870@gmail.com"}
+              />
+            )}
           </div>
         </div>
       </div>
