@@ -8,7 +8,7 @@ const OrderForm = ({ organizationName, handlePopupClose }) => {
   const [orderData, setOrderData] = useState({
     organizationName: organizationName,
     dateOrdered: new Date(),
-    wasteType: "",
+    wasteType: "Uranium",
     quantity: "",
     timeToDecay: "",
     latitude: 0,
