@@ -119,48 +119,6 @@ export default function Query() {
     return null;
   };
 
-  //   // useEffect to initialize the map
-  //   useEffect(() => {
-  //     if (process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) { // Only initialize the map if it hasn't been initialized already
-  //   // useEffect to initialize the map
-  //   useEffect(() => {
-  //     if (process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) { // Only initialize the map if it hasn't been initialized already
-
-  //       mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN; // Set the access token right before using it
-
-  //       const newMap = new mapboxgl.Map({
-  //         container: "map", // Make sure this ID matches the div ID
-  //         style: "mapbox://styles/mapbox/streets-v11",
-  //         center: [-74.006, 40.7128], // Adjust this center as needed for your use case
-  //         zoom: 9,
-  //       });
-
-  //       newMap.on('load', () => {
-  //         setMap(newMap); // When the map is loaded, then set it to the state
-  //       });
-
-  //       // If you are adding controls to the map, it should be done here
-  //       newMap.addControl(new mapboxgl.NavigationControl());
-  //     }
-  //       mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN; // Set the access token right before using it
-
-  //       const newMap = new mapboxgl.Map({
-  //         container: "map", // Make sure this ID matches the div ID
-  //         style: "mapbox://styles/mapbox/streets-v11",
-  //         center: [-74.006, 40.7128], // Adjust this center as needed for your use case
-  //         zoom: 9,
-  //       });
-
-  //       newMap.on('load', () => {
-  //         setMap(newMap); // When the map is loaded, then set it to the state
-  //       });
-
-  //       // If you are adding controls to the map, it should be done here
-  //       newMap.addControl(new mapboxgl.NavigationControl());
-  //     }
-
-  //   }, []);
-  //   }, []);
 
   const drawPolygon = (center, radius, key) => {
     //TODO FIX THIS
