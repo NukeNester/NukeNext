@@ -24,7 +24,7 @@ export function Hero({ user, isLoggedIn }) {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-4xl text-center pb-96">
               <div className="flex flex-col items-center justify-center gap-4">
-                <Logo src="https://cdn.discordapp.com/attachments/1230548482725773426/1231136718460031088/logo1-removebg.png?ex=6635dc6b&is=6623676b&hm=000323459963bb9b8a265949410c34b7f997471de53bb1793354185918de2fd0&" width={100} height={100} />
+                <Logo src="https://cdn.discordapp.com/attachments/1230548482725773426/1231136718460031088/logo1-removebg.png?ex=6635dc6b&is=6623676b&hm=000323459963bb9b8a265949410c34b7f997471de53bb1793354185918de2fd0&" width={125} height={125} />
                 <h1 className="text-5xl font-bold sm:text-6xl">
                   <span className="text-blue-900/90">Nuke</span>
                   <span className="text-white">Nest</span>
