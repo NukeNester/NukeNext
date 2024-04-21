@@ -69,9 +69,6 @@ const OrderForm = ({ organizationName, handlePopupClose }) => {
         orderData
       );
       console.log("Order created successfully:", response.data);
-      wasteType("");
-      quantity("");
-      timeToDecay("");
     } catch (error) {
       console.error("Error creating order:", error);
     }
