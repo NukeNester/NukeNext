@@ -69,6 +69,7 @@ const OrderForm = ({ organizationName, handlePopupClose }) => {
         orderData
       );
       console.log("Order created successfully:", response.data);
+      window.location.reload();
     } catch (error) {
       console.error("Error creating order:", error);
     }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import OrderCard from "./OrderCard";
 const OrderTable = ({ orders, isAdmin }) => {
 
   const [editedOrders, setEditedOrders] = useState({});
@@ -37,7 +38,8 @@ const OrderTable = ({ orders, isAdmin }) => {
 
   return (
     <div>
-      <table className="border-collapse border border-gray-300">
+      <OrderCard />
+      <table className="border-collapse border border-gray-300 ">
         <thead>
           <tr>
             {isAdmin && (
