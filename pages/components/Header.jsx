@@ -21,7 +21,7 @@ export function Header({ isLoggedIn, handleLogIn, handleLogOut }) {
           <HomeButton />
         </div>
 
-        <div className="flex gap-x-12">
+        <div className="sm:flex sm:flex-wrap gap-x-12 ">
           {navigation.map((item) => {
             // Check if the item is not the Home link or the user is not logged in
             if (
@@ -32,7 +32,7 @@ export function Header({ isLoggedIn, handleLogIn, handleLogOut }) {
             } else {
               return (
                 <Link key={item.name} href={item.href} passHref>
-                  <span className="text-md font-semibold leading-6 text-white hover:text-gray-100 cursor-pointer">
+                  <span className="hidden lg:block text-lg px-5 font-semibold leading-6 text-white hover:text-gray-100 cursor-pointer">
                     {item.name}
                   </span>
                 </Link>
@@ -41,10 +41,10 @@ export function Header({ isLoggedIn, handleLogIn, handleLogOut }) {
           })}
         </div>
 
-        <div className="lg:flex lg:flex-1 lg:justify-end">
+        <div className="lg:flex lg:flex-1 lg:justify-end pl-10">
           {!isLoggedIn && (
             <span
-              className="text-sm font-semibold leading-6 text-white hover:text-gray-100 cursor-pointer"
+              className="text-lg font-semibold leading-6 text-white hover:text-gray-100 cursor-pointer"
               onClick={handleLogIn}
             >
               Log in <span aria-hidden="true">&rarr;</span>
@@ -52,7 +52,7 @@ export function Header({ isLoggedIn, handleLogIn, handleLogOut }) {
           )}
           {isLoggedIn && (
             <span
-              className="text-sm font-semibold leading-6 text-white hover:text-gray-100 cursor-pointer"
+              className="text-lg font-semibold leading-6 text-white hover:text-gray-100 cursor-pointer"
               onClick={handleLogOut}
             >
               Log Out <span aria-hidden="true">&rarr;</span>

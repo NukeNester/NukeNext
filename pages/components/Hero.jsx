@@ -19,8 +19,8 @@ export function Hero({ user, isLoggedIn }) {
   return (
     <>
       <Header isLoggedIn={isLoggedIn} handleLogIn={redirectToLoginPage} handleLogOut={logout} />
-      <div className="pt-6">  {/* Reduced top padding */}
-        <div className="py-16 sm:py-20 lg:pb-24">  {/* Reduced vertical padding */}
+      <div className="">
+        <div className="py-24 sm:py-32 lg:pb-40">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-4xl text-center pb-96">
               <div className="flex flex-col items-center justify-center gap-4">
