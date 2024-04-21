@@ -5,9 +5,9 @@ function Logo({ width, height, src }) {
     <motion.img
       src={src}
       alt="Logo"
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 5 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1.5 }}
+      transition={{ duration: 0.8 }}
       style={{ width, height }}
     />
   );

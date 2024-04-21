@@ -28,21 +28,21 @@ export default function Query() {
     let response = null;
     try {
       if (user.email == "echen9870@gmail.com") {
-        console.log("Getting all orders");
         response = await axios.get(
           "https://server-iwh0.onrender.com/orders/getAllOrder"
         );
+        setOrders(response.data);
       } else {
         response = await axios.get(
           `https://server-iwh0.onrender.com/orders/getOrderByEmail/${user.email}`
         );
+        setOrders(response.data);
       }
-      setOrders(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+
 
   //Posts Markers on Existing Orders By Organization
   const initializeMap = async () => {
@@ -58,6 +58,7 @@ export default function Query() {
       setMap(map);
       map.addControl(new mapboxgl.NavigationControl());
       if (orders) {
+        console.log("Adding order pins");
         orders.forEach((order) => {
           new mapboxgl.Marker()
             .setLngLat([order.longitude, order.latitude])
@@ -69,11 +70,15 @@ export default function Query() {
 
   //onEffect that automatically grabs all the orders made by the organization and initializes the maps
   useEffect(() => {
-    if (!isLoggedIn) {
-      return;
-    }
-    getOrders().then(initializeMap);
+    getOrders();
+    setTimeout(1);
+    initializeMap();
+    console.log("Initialized Map");
   }, []);
+
+  useEffect(() => {
+    initializeMap();
+  }, [orders]);
 
   // Function to handle search form submission
   const handleSearchChange = async (event) => {
@@ -160,7 +165,10 @@ export default function Query() {
       placeName: place.place_name,
       latitude: place.center[1],
       longitude: place.center[0],
-      populationDensity: await getPopulationDensity(place.center[1], place.center[0]),
+      populationDensity: await getPopulationDensity(
+        place.center[1],
+        place.center[0]
+      ),
     });
     setSuggestions([]);
     if (map) {

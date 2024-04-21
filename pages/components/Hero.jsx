@@ -32,7 +32,7 @@ export function Hero({ user, isLoggedIn }) {
                 </h1>
 
               </div>
-              <p className="mt-6 text-lg leading-8 text-white">
+              <p className="mt-4 text-lg leading-8 text-white">  {/* Reduced margin top for the paragraph */}
                 Properly dispose and handle nuclear waste with Nuke Nester.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6 pb-20">
