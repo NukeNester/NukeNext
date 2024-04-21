@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import OrderCard from "./OrderCard";
+import StaticMap from "./StaticMap";
 
 const OrderTable = ({ orders, isAdmin, updateOrder }) => {
   const handleStatusChange = async (order) => {
@@ -28,13 +28,7 @@ const OrderTable = ({ orders, isAdmin, updateOrder }) => {
             className={`flex mt-10 max-w-xl border white rounded-md text-white`}
           >
             <div className="p-4">
-              <img
-                src={
-                  "https://pp.walk.sc/apartments/e/1/460x400/MD/Hagerstown/City_Square.png"
-                }
-                width=""
-                className="h-48 w-48 rounded-sm text-center border  border-neutral-400/20 hover:border-black"
-              />
+              <StaticMap lat={order.latitude} lng={order.longitude}></StaticMap>
             </div>
             <div className={`flex flex-col justify-start py-4 pr-4`}>
               <div>
@@ -42,8 +36,13 @@ const OrderTable = ({ orders, isAdmin, updateOrder }) => {
                 <h1 className="text-2xl">
                   {order.quantity} lbs of {order.wasteType}
                 </h1>
-                <h1 className="text-lg">Decay on {order.timeToDecay}</h1>
-                <h1 className="text-lg">Ordered on {order.dateOrdered}</h1>
+                <h1 className="text-lg">
+                  Decay on {new Date(order.timeToDecay).toLocaleDateString()}
+                </h1>
+                <h1 className="text-lg">
+                  Ordered on {new Date(order.dateOrdered).toLocaleDateString()}
+                </h1>
+
                 <button
                   className="mt-4 ml-10 border text-xs text-neutral p-2 rounded-sm hover:bg-slate-300"
                   onClick={() => handleStatusChange(order)}
