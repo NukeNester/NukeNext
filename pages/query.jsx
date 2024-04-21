@@ -69,6 +69,9 @@ export default function Query() {
 
   //onEffect that automatically grabs all the orders made by the organization and initializes the maps
   useEffect(() => {
+    if (!isLoggedIn) {
+      return;
+    }
     getOrders().then(initializeMap);
   }, []);
 

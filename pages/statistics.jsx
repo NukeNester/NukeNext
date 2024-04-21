@@ -6,6 +6,8 @@ import EmissionsSaved from "./components/EmissionsSaved";
 import LineGraph from "./components/LineGraph";
 import GrayBox from "./components/GrayBox";
 import Header from "./components/Header";
+import React, { useRef, useEffect } from "react";
+import wasteData from './data/wasteData.json';
 
 import {
   useAuthInfo,
@@ -16,28 +18,17 @@ import {
 export default function Statistics() {
   const { isLoggedIn, user } = useAuthInfo();
   const logout = useLogoutFunction();
-  const { redirectToLoginPage } = useRedirectFunctions();
-  const [wasteData, setWasteData] = useState([]);
+  const { redirectToLoginPage, redirectToAccountPage } = useRedirectFunctions();
+  const myRef = useRef(null);
+  const executeScroll = () =>
+    myRef.current.scrollIntoView({ behavior: "smooth" });
 
   useEffect(() => {
-    if (!user || !user.email) return;  // Ensure there's a user and email before fetching
-  
-    const fetchData = async () => {
-      try {
-        const url = user.email === "echen9870@gmail.com"
-          ? "https://server-iwh0.onrender.com/orders/getAllOrder"
-          : `https://server-iwh0.onrender.com/orders/getOrderByEmail/${user.email}`;
-  
-        const response = await axios.get(url);
-        setWasteData(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-  
-    fetchData();
-  }, [user]);  // Depend on the user object itself if the email is the only mutable property
+    if (!isLoggedIn) {
+      window.location.href = "https://14758910.propelauthtest.com/en/login";
+    }
+  }, []);
+
   
   return (
     <>

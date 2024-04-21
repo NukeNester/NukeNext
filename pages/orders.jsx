@@ -58,11 +58,14 @@ export default function Orders() {
   };
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      window.location.href = "https://14758910.propelauthtest.com/en/login";
+    }
     if (!user) {
       return;
     }
     getOrders();
-  }, []);
+  }, [user]);
 
   const executeScroll = () => {
     myRef.current.scrollIntoView({ behavior: "smooth" });
