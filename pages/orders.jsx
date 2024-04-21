@@ -17,11 +17,20 @@ import {
 
 export default function Orders() {
   const { loading, isLoggedIn, user } = useAuthInfo();
+
   const logout = useLogoutFunction();
   const { redirectToLoginPage, redirectToAccountPage } = useRedirectFunctions();
   const [orders, setOrders] = useState(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const myRef = useRef(null);
+
+  useEffect(() => {
+    if (user) {
+      getOrders();
+    } else {
+      window.location.href = "https://14758910.propelauthtest.com/en/login";
+    }
+  }, []);
 
   const getOrders = async () => {
     try {
@@ -47,10 +56,6 @@ export default function Orders() {
       });
     });
   };
-
-  useEffect(() => {
-    getOrders();
-  }, []);
 
   const executeScroll = () => {
     myRef.current.scrollIntoView({ behavior: "smooth" });
