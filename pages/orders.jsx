@@ -64,7 +64,6 @@ export default function Orders() {
     getOrders();
   }, []);
 
->>>>>>> d0aaaefbd3b69866d1ddcb5a494aa7712630c66d
   const executeScroll = () => {
     myRef.current.scrollIntoView({ behavior: "smooth" });
   };
