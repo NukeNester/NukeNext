@@ -20,7 +20,7 @@ const OrderTable = ({ orders, isAdmin, updateOrder }) => {
   };
 
   return (
-    <div className="flex flex-wrap justify-center gap-x-16">
+    <div className="flex flex-wrap justify-center gap-x-16 shadow-sm">
       {orders &&
         orders.map((order, index) => (
           <div

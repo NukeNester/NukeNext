@@ -239,20 +239,20 @@ export default function Query() {
         handleLogIn={redirectToLoginPage}
         handleLogOut={logout}
       />
-      <div className="flex flex-col h-screen justify-center items-center bg-gradient-to-b from-gray-300 to-green-400">
+      <div className="pb-96 flex flex-col justify-center items-center">
         <div className="text-center p-5 max-w-3xl w-full">
-          <h1 className="text-2xl font-bold text-white">Query Page</h1>
-          <p className="text-sm text-white mt-2">
+          <h1 className="text-5xl font-bold text-white">Search</h1>
+          <p className="text-lg text-white my-4">
             Here you can perform searches or submit queries to find specific
             information or resources.
           </p>
-          <div className="mt-4 flex justify-center">
+          <div className="mt-4 flex justify-center pb-6">
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search a Location..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="w-70 p-2 rounded-l-md border border-gray-300"
+              className="w-80 p-2 rounded-md border border-gray-300"
             />
             <ul className="absolute z-10 list-none bg-white rounded shadow-lg mt-2 w-48">
               {suggestions.map((suggestion) => (
