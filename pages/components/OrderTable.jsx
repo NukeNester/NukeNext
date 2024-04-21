@@ -3,7 +3,7 @@ import axios from "axios";
 const OrderTable = ({ orders, isAdmin }) => {
   const [editedOrders, setEditedOrders] = useState({});
 
-  const handleStatusChange = (orderId, newStatus) => {
+  const handleStatusChange = (orderId, newStatus, isAdmin) => {
     setEditedOrders((prevOrders) => ({
       ...prevOrders,
       [orderId]: newStatus,
@@ -30,7 +30,7 @@ const OrderTable = ({ orders, isAdmin }) => {
     } catch (error) {
       console.error("Error saving changes:", error);
     }
-    console.log("Successfuly saved all changes")
+    console.log("Successfuly saved")
   };
 
   return (
