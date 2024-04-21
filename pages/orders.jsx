@@ -125,7 +125,7 @@ export default function Orders() {
           </div>
         </Dialog>
       </Transition.Root>
-      <div className="py-72">
+      <div className="pt-36">
         <div className="flex flex-col mx-auto max-w-7xl px-6 lg:px-8">
           <div className=" mx-auto max-w-4xl text-center pb-96">
             <h1 className="text-5xl font-bold  text-white sm:text-6xl">
@@ -149,7 +149,7 @@ export default function Orders() {
               </button>
             </div>
           </div>
-          <div className="pb-80 flex flex-col justify-center" ref={myRef}>
+          <div className="mt-48 pb-80 flex flex-col justify-center" ref={myRef}>
             <div>
               <h1 className="pt-16 text-5xl font-bold text-white text-center">
                 {orders && useCard && orders.length > 0 ? "Your Orders" : "No Orders."
