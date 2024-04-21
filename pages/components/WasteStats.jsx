@@ -7,7 +7,7 @@ const WasteStats = ({ wasteData }) => {
   }
 
   // Calculate total waste by summing up the quantities from each order
-  const totalWaste = wasteData.reduce((acc, order) => acc + wasteData.quantity, 0);
+  const totalWaste = wasteData.reduce((acc, order) => acc + order.quantity, 0);
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
