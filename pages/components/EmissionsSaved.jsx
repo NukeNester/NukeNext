@@ -1,4 +1,3 @@
-// components/EmissionsSaved.jsx
 import React from 'react';
 
 const EmissionsSaved = ({ wasteData }) => {
@@ -8,12 +7,12 @@ const EmissionsSaved = ({ wasteData }) => {
   const totalCO2Avoided = totalUranium * co2AvoidedPerTonUranium;
 
   return (
-    <div className="bg-white p-3 rounded-xl shadow-lg flex flex-col items-center">
-      <h2 className="text-lg font-semibold text-gray-800 mb-3">Greenhouse Emissions Prevented</h2>
-      <p className="text-2xl font-bold text-blue-600">{totalCO2Avoided.toLocaleString()}</p>
-      <p className="text-sm font-bold text-blue-600">Tons of CO2</p>
-      <p className="text-sm text-gray-500 mt-1">Contribution to reducing global warming</p>
-    </div>
+    <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
+    <h2 className="text-lg font-semibold text-gray-800 mb-3">Stopped Emissions</h2>
+    <p className="text-2xl font-bold text-blue-600 mt-2">{totalCO2Avoided.toLocaleString()} Tons of CO2</p>
+    <p className="text-sm text-gray-500 mt-1">Contribution to reducing global warming</p>
+  </div>
+  
   );
 };
 
