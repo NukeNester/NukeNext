@@ -7,12 +7,11 @@ const EmissionsSaved = ({ wasteData }) => {
   const totalCO2Avoided = totalUranium * co2AvoidedPerTonUranium;
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-    <h2 className="text-lg font-semibold text-gray-800 mb-3">Stopped Emissions</h2>
-    <p className="text-2xl font-bold text-blue-600 mt-2">{totalCO2Avoided.toLocaleString()} Tons of CO2</p>
-    <p className="text-sm text-gray-500 mt-1">Contribution to reducing global warming</p>
-  </div>
-  
+    <div className="bg-white p-3 rounded-xl shadow-lg flex flex-col items-center">
+      <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-3">Emissions Stopped</h2>
+      <p className="text-xl md:text-2xl font-bold text-blue-600">{totalCO2Avoided.toLocaleString()}</p>
+      <p className="text-sm md:text-base font-bold text-blue-600">Lbs of CO2</p>
+    </div>
   );
 };
 
