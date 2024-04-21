@@ -44,7 +44,7 @@ export function Header({ isLoggedIn, handleLogIn, handleLogOut }) {
         <div className="lg:flex lg:flex-1 lg:justify-end">
           {!isLoggedIn && (
             <span
-              className="text-sm font-semibold leading-6 text-white cursor-pointer"
+              className="text-sm font-semibold leading-6 text-white hover:text-gray-100 cursor-pointer"
               onClick={handleLogIn}
             >
               Log in <span aria-hidden="true">&rarr;</span>
@@ -52,7 +52,7 @@ export function Header({ isLoggedIn, handleLogIn, handleLogOut }) {
           )}
           {isLoggedIn && (
             <span
-              className="text-sm font-semibold leading-6 text-white cursor-pointer"
+              className="text-sm font-semibold leading-6 text-white hover:text-gray-100 cursor-pointer"
               onClick={handleLogOut}
             >
               Log Out <span aria-hidden="true">&rarr;</span>

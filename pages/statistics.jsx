@@ -4,7 +4,7 @@ import EmissionsSaved from "./components/EmissionsSaved";
 import LineGraph from "./components/LineGraph";
 import GrayBox from "./components/GrayBox";
 import Header from "./components/Header";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import wasteData from './data/wasteData.json';
 
 import {
@@ -21,6 +21,14 @@ export default function Statistics() {
   const myRef = useRef(null);
   const executeScroll = () =>
     myRef.current.scrollIntoView({ behavior: "smooth" });
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      window.location.href = "https://14758910.propelauthtest.com/en/login";
+    }
+  }, []);
+
+  
   return (
     <>
       <Head>
