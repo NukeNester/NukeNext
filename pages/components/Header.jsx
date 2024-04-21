@@ -32,7 +32,7 @@ export function Header({ isLoggedIn, handleLogIn, handleLogOut }) {
             } else {
               return (
                 <Link key={item.name} href={item.href} passHref>
-                  <span className="hidden lg:block text-lg px-5 font-semibold leading-6 text-white hover:text-gray-100 cursor-pointer">
+                  <span className="hidden lg:block text-lg font-semibold leading-6 text-white hover:text-gray-100 cursor-pointer">
                     {item.name}
                   </span>
                 </Link>
