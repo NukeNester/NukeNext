@@ -22,66 +22,35 @@ export default function Orders() {
   const [orders, setOrders] = useState(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const myRef = useRef(null);
-  const [useCard, setUseCard] = useState(false);
 
   const getOrders = async () => {
-    let response = null;
     try {
-      if (user.email == "echen9870@gmail.com" || user.email == "kkochhar2004@gmail.com") {
-        console.log("Getting all orders")
-        response = await axios.get(
-          "https://server-iwh0.onrender.com/orders/getAllOrder"
-        );
-      } else {
-        response = await axios.get(
-          `https://server-iwh0.onrender.com/orders/getOrderByEmail/${user.email}`
-        );
-      }
-      response == null ? getOrders() : setOrders(response.data);
-
-
-      setTimeout(function () {
-        // This code will execute after 1 second
-        console.log("Waited for 1 second!");
-      }, 1000);
-
-      console.log("Orders:", response.data)
-
+      const url =
+        user.email === "echen9870@gmail.com" ||
+        user.email === "kkochhar2004@gmail.com"
+          ? "https://server-iwh0.onrender.com/orders/getAllOrder"
+          : `https://server-iwh0.onrender.com/orders/getOrderByEmail/${user.email}`;
+      const response = await axios.get(url);
+      setOrders(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-
-  const changeStatus = () => {
-    try {
-      status = "pending" ? "disposed" : "pending";
-      const response = axios.put(
-        `https://server-iwh0.onrender.com/orders/updateOrderByID/${id}/${status}`
-      );
-      console.log("Successfuly saved", response);
-    } catch (error) {
-      console.error("Error saving changes:", error);
-    }
+  const handleUpdateOrder = (orderID, status) => {
+    setOrders((prevOrders) => {
+      return prevOrders.map((o) => {
+        if (orderID === o._id) {
+          return { ...o, status: status }; // Create a new object with updated status
+        }
+        return o;
+      });
+    });
   };
-  useEffect(() => {
-    if (user) {
-      getOrders();
-    }
-  }, [user]);
-
 
   useEffect(() => {
-    if (orders) {
-      setUseCard(true);
-    }
-  }, [orders])
-
-  function formatDate(date) {
-    const createdAtDate = new Date(date);
-    const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
-    return createdAtDate.toLocaleDateString('en-US', options);
-}
+    getOrders();
+  }, []);
 
   const executeScroll = () => {
     myRef.current.scrollIntoView({ behavior: "smooth" });
@@ -152,35 +121,17 @@ export default function Orders() {
           <div className="mt-48 pb-80 flex flex-col justify-center" ref={myRef}>
             <div>
               <h1 className="pt-16 text-5xl font-bold text-white text-center">
-                {orders && useCard && orders.length > 0 ? "Your Orders" : "No Orders."
-
-                }
+                {orders && orders.length > 0 ? "Your Orders" : "No Orders."}
               </h1>
             </div>
-            <div className="flex flex-wrap justify-center gap-x-16">
-
-              {orders && useCard && orders.length > 0 && orders.map((order, index) => (
-                <div key={index} className={`flex mt-10 max-w-xl border white rounded-md text-white`}>
-                  <div className="p-4">
-                    <img
-                      src={"https://pp.walk.sc/apartments/e/1/460x400/MD/Hagerstown/City_Square.png"}
-                      width=""
-                      className="h-48 w-48 rounded-sm text-center border  border-neutral-400/20 hover:border-black"
-                    />
-                  </div>
-                  <div className={`flex flex-col justify-start py-4 pr-4`}>
-                    <div>
-                      <h1 className="text-3xl font-bold">Order {order.status}</h1>
-                      <h1 className="text-2xl">{order.quantity} lbs of {order.wasteType}</h1>
-                      <h1 className="text-lg">Decay on {formatDate(order.timeToDecay)}</h1>
-                      <h1 className="text-lg">Ordered on {formatDate(order.dateOrdered)}</h1>
-                      <button onClick={changeStatus} className="mt-4 ml-10 border text-xs text-neutral p-2 rounded-sm hover:bg-slate-300">Change Status</button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
+            <OrderTable
+              orders={orders}
+              isAdmin={
+                user.email == "echen9870@gmail.com" ||
+                user.email == "kkochhar2004@gmail.com"
+              }
+              updateOrder={handleUpdateOrder}
+            ></OrderTable>
           </div>
         </div>
       </div>
