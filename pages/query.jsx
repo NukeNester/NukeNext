@@ -119,6 +119,7 @@ export default function Query() {
     return null;
   };
 
+  
 
   const drawPolygon = (center, radius, key) => {
     //TODO FIX THIS
