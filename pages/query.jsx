@@ -43,7 +43,6 @@ export default function Query() {
     }
   };
 
-
   //Posts Markers on Existing Orders By Organization
   const initializeMap = async () => {
     //Setups the params for the map
@@ -98,66 +97,6 @@ export default function Query() {
     }
   };
 
-  async function getPopulationDensity(latitude, longitude) {
-    try {
-      const response = await fetch(
-        `http://api.geonames.org/findNearbyPostalCodesJSON?lat=${latitude}&lng=${longitude}&username=echen9870`
-      );
-      const data = await response.json();
-      if (data.postalCodes && data.postalCodes.length > 0) {
-        const populationDensity =
-          data.postalCodes[0].population / data.postalCodes[0].areaInSqKm;
-        return populationDensity;
-      } else {
-        return null;
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      return null;
-    }
-  }
-
-  async function getSeismicActivity(latitude, longitude, radius = 100) {
-    try {
-      const response = await fetch(
-        `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&latitude=${latitude}&longitude=${longitude}&maxradiuskm=${radius}`
-      );
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch seismic activity. Status: ${response.status}`
-        );
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching seismic activity:", error);
-      return null;
-    }
-  }
-
-  async function getTerrainType(latitude, longitude) {
-    try {
-      const response = await fetch(
-        `https://api.mapbox.com/v4/mapbox.terrain-rgb/${longitude},${latitude}/1000x1000.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}`
-      );
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch terrain data. Status: ${response.status}`
-        );
-      }
-
-      const data = await response.json();
-      // Analyze elevation data to determine terrain type
-      const elevationData = data;
-      const terrainType = analyzeElevationData(elevationData);
-      return terrainType;
-    } catch (error) {
-      console.error("Error fetching terrain data:", error);
-      return null;
-    }
-  }
-
   const selectSuggestion = async (place) => {
     setSearchQuery(place.place_name);
 
@@ -165,10 +104,6 @@ export default function Query() {
       placeName: place.place_name,
       latitude: place.center[1],
       longitude: place.center[0],
-      populationDensity: await getPopulationDensity(
-        place.center[1],
-        place.center[0]
-      ),
     });
     setSuggestions([]);
     if (map) {
@@ -283,15 +218,6 @@ export default function Query() {
                 </h3>
                 <p className="text-sm text-gray-600">
                   {searchResult.description}
-                </p>
-                <p className="text-sm text-gray-600">
-                  Population Density: {searchResult.populationDensity}
-                </p>
-                <p className="text-sm text-gray-600">
-                  Seismic Activity: {searchResult.seismicActivity}
-                </p>
-                <p className="text-sm text-gray-600">
-                  Terrain Type: {searchResult.terrainType}
                 </p>
               </div>
             )}
