@@ -47,8 +47,8 @@ export default function Statistics() {
       <Header isLoggedIn={isLoggedIn} handleLogIn={redirectToLoginPage} handleLogOut={logout} />
       <div className="relative min-h-screen p-4">
         {/* Reduced top margin for title and header */}
-        <div className="flex flex-col items-center mt-2">
-          <h1 className="text-3xl font-bold text-white mb-4">
+        <div className="flex flex-col items-center mt-2"> {/* Reduced margin-top from mt-8 to mt-2 */}
+          <h1 className="text-5xl font-bold text-white mb-10">
             Profile Statistics
           </h1>
         </div>

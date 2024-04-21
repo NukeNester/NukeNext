@@ -1,10 +1,9 @@
-// pages/Query.jsx
 "use client";
 import Head from "next/head";
 import React, { useRef, useEffect, useState } from "react";
 import GrayBox from "./components/GrayBox"; // Adjust the path as necessary
 import mapboxgl from "mapbox-gl";
-import Axios from "axios";
+import axios from "axios";
 import Header from "./components/Header";
 import {
   withAuthInfo,
@@ -18,18 +17,65 @@ export default function Query() {
   const { loading, isLoggedIn, user } = useAuthInfo();
   const logout = useLogoutFunction();
   const { redirectToLoginPage, redirectToAccountPage } = useRedirectFunctions();
-  const myRef = useRef(null);
-  const executeScroll = () =>
-    myRef.current.scrollIntoView({ behavior: "smooth" });
   const [searchQuery, setSearchQuery] = useState("");
   const [map, setMap] = useState(null);
   const [searchResult, setSearchResult] = useState(null); // State to hold search result
   const [suggestions, setSuggestions] = useState([]);
+  const [orders, setOrders] = useState(null);
+
+  //API Used To Get Orders
+  const getOrders = async () => {
+    let response = null;
+    try {
+      if (user.email == "echen9870@gmail.com") {
+        console.log("Getting all orders");
+        response = await axios.get(
+          "https://server-iwh0.onrender.com/orders/getAllOrder"
+        );
+      } else {
+        response = await axios.get(
+          `https://server-iwh0.onrender.com/orders/getOrderByEmail/${user.email}`
+        );
+      }
+      setOrders(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  //Posts Markers on Existing Orders By Organization
+  const initializeMap = async () => {
+    //Setups the params for the map
+    const map = new mapboxgl.Map({
+      container: "map",
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [-76.902221, 39.299901], // Central coordinates of the map
+      zoom: 10,
+    });
+    //Loads the Map and Pins All the Orders
+    map.on("load", async () => {
+      setMap(map);
+      map.addControl(new mapboxgl.NavigationControl());
+      if (orders) {
+        orders.forEach((order) => {
+          new mapboxgl.Marker()
+            .setLngLat([order.longitude, order.latitude])
+            .addTo(map);
+        });
+      }
+    });
+  };
+
+  //onEffect that automatically grabs all the orders made by the organization and initializes the maps
+  useEffect(() => {
+    getOrders().then(initializeMap);
+  }, []);
 
   // Function to handle search form submission
   const handleSearchChange = async (event) => {
     setSearchQuery(event.target.value);
-    if (event.target.value.length > 2) {  // Only search if the query length is greater than 2 characters
+    if (event.target.value.length > 2) {
       try {
         const response = await fetch(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${event.target.value}.json?access_token=${mapboxgl.accessToken}&autocomplete=true`
@@ -44,55 +90,74 @@ export default function Query() {
     }
   };
 
-  // Handle form submission
-  const handleSearchSubmit = async (event) => {
-    event.preventDefault();
+  async function getPopulationDensity(latitude, longitude) {
     try {
-        // Fetch data from Mapbox Geocoding API
-        const response = await fetch(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery}.json?access_token=${mapboxgl.accessToken}`
-        );
-        const data = await response.json();
-  
-        // Check if there are any results
-        if (data.features.length > 0) {
-          const firstFeature = data.features[0];
-          const { center, place_name } = firstFeature;
-  
-          //Fly to location on Map
-          if (map) {
-            map.flyTo({
-              center: center,
-              zoom: 12,
-            });
-          }
-          drawPolygon(searchResult.center, 0.05, "highlight-area");
-          // Draw a polygon to highlight the area if in United States
-        //   drawPolygon(center, 0.05, "1");
-  
-          // Set the search result state
-          setSearchResult({
-            placeName: place_name,
-            center: center, // Set the center object
-          });
-  
-          // You can update state or display this information in your UI as needed
-        } else {
-          console.log("No results found");
-          setSearchResult(null); // Clear search result state
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setSearchResult(null); // Clear search result state
+      const response = await fetch(
+        `http://api.geonames.org/findNearbyPostalCodesJSON?lat=${latitude}&lng=${longitude}&username=echen9870`
+      );
+      const data = await response.json();
+      if (data.postalCodes && data.postalCodes.length > 0) {
+        const populationDensity =
+          data.postalCodes[0].population / data.postalCodes[0].areaInSqKm;
+        return populationDensity;
+      } else {
+        return null;
       }
-  };
-  const selectSuggestion = (place) => {
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+  }
+
+  async function getSeismicActivity(latitude, longitude, radius = 100) {
+    try {
+      const response = await fetch(
+        `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&latitude=${latitude}&longitude=${longitude}&maxradiuskm=${radius}`
+      );
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch seismic activity. Status: ${response.status}`
+        );
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching seismic activity:", error);
+      return null;
+    }
+  }
+
+  async function getTerrainType(latitude, longitude) {
+    try {
+      const response = await fetch(
+        `https://api.mapbox.com/v4/mapbox.terrain-rgb/${longitude},${latitude}/1000x1000.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}`
+      );
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch terrain data. Status: ${response.status}`
+        );
+      }
+
+      const data = await response.json();
+      // Analyze elevation data to determine terrain type
+      const elevationData = data;
+      const terrainType = analyzeElevationData(elevationData);
+      return terrainType;
+    } catch (error) {
+      console.error("Error fetching terrain data:", error);
+      return null;
+    }
+  }
+
+  const selectSuggestion = async (place) => {
     setSearchQuery(place.place_name);
+
     setSearchResult({
       placeName: place.place_name,
       latitude: place.center[1],
       longitude: place.center[0],
-      description: "This is a description for the selected location. It's a great place to visit!"  // Static description, replace with dynamic content if available
+      populationDensity: await getPopulationDensity(place.center[1], place.center[0]),
     });
     setSuggestions([]);
     if (map) {
@@ -104,68 +169,7 @@ export default function Query() {
     }
   };
 
-  // Function to render search result information
-  const renderSearchResult = () => {
-    if (searchResult) {
-    //   return (
-    //     <div>
-    //       <h3>Search Result</h3>
-    //       <p>Place Name: {searchResult.placeName}</p>
-    //       <p>Latitude: {searchResult.latitude}</p>
-    //       <p>Longitude: {searchResult.longitude}</p>
-    //     </div>
-    //   );
-    }
-    return null;
-  };
-
-  //   // useEffect to initialize the map
-  //   useEffect(() => {
-  //     if (process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) { // Only initialize the map if it hasn't been initialized already
-  //   // useEffect to initialize the map
-  //   useEffect(() => {
-  //     if (process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) { // Only initialize the map if it hasn't been initialized already
-
-  //       mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN; // Set the access token right before using it
-
-  //       const newMap = new mapboxgl.Map({
-  //         container: "map", // Make sure this ID matches the div ID
-  //         style: "mapbox://styles/mapbox/streets-v11",
-  //         center: [-74.006, 40.7128], // Adjust this center as needed for your use case
-  //         zoom: 9,
-  //       });
-
-  //       newMap.on('load', () => {
-  //         setMap(newMap); // When the map is loaded, then set it to the state
-  //       });
-
-  //       // If you are adding controls to the map, it should be done here
-  //       newMap.addControl(new mapboxgl.NavigationControl());
-  //     }
-  //       mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN; // Set the access token right before using it
-
-  //       const newMap = new mapboxgl.Map({
-  //         container: "map", // Make sure this ID matches the div ID
-  //         style: "mapbox://styles/mapbox/streets-v11",
-  //         center: [-74.006, 40.7128], // Adjust this center as needed for your use case
-  //         zoom: 9,
-  //       });
-
-  //       newMap.on('load', () => {
-  //         setMap(newMap); // When the map is loaded, then set it to the state
-  //       });
-
-  //       // If you are adding controls to the map, it should be done here
-  //       newMap.addControl(new mapboxgl.NavigationControl());
-  //     }
-
-  //   }, []);
-  //   }, []);
-
   const drawPolygon = (center, radius, key) => {
-    //TODO FIX THIS
-    // List of sources to exclude from removal
-
     // Remove all existing layers except excluded layers
     Object.keys(map.getStyle().sources).forEach((source) => {
       if (source == key) {
@@ -178,13 +182,6 @@ export default function Query() {
         map.removeSource(source);
       }
     });
-
-    //TODO
-    //Create a query that gets all order within a circle distance of the specified location
-    //Return a list of all orders that match this query
-    //Create a map function iterating through the list, where each sourceID is is tied to the index,
-    //Create a circle based on the position for each index.
-    //Radius should be based on quantity and type?
 
     // Generate coordinates for the circular polygon
     const coordinates = generateCircleCoordinates(center, 0.01);
@@ -234,52 +231,6 @@ export default function Query() {
     coordinates.push(coordinates[0]);
     return coordinates;
   };
-  //const mapContainerRef = useRef(null);
-  //const [map, setMap] = useState(null);
-  //const mapContainerRef = useRef(null);
-  //const [map, setMap] = useState(null);
-
-  // Function to fetch location data from the backend using Axios
-  async function fetchLocations() {
-    try {
-      const response = await Axios.get(
-        "https://server-iwh0.onrender.com/orders/getOrderByArea",
-        {
-          params: {
-            topLeft: [-79.4877, 39.722], // Specify the actual coordinates for the top left corner
-            bottomRight: [-75.0487, 37.9117],
-          },
-        }
-      );
-      return response.data; // Accessing data directly from Axios response
-    } catch (error) {
-      console.error("Failed to fetch locations", error);
-      return [];
-    }
-  }
-
-  useEffect(() => {
-    const newMap = new mapboxgl.Map({
-      container: "map",
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [-76.902221, 39.299901], // Central coordinates of the map
-      zoom: 10,
-    });
-
-    newMap.on("load", async () => {
-      setMap(newMap);
-      newMap.addControl(new mapboxgl.NavigationControl());
-
-      const locations = await fetchLocations();
-      locations.forEach((location) => {
-        new mapboxgl.Marker()
-          .setLngLat([location.longitude, location.latitude])
-          .addTo(newMap);
-      });
-    });
-
-  }, []);
-
 
   return (
     <>
@@ -288,48 +239,54 @@ export default function Query() {
         handleLogIn={redirectToLoginPage}
         handleLogOut={logout}
       />
-      <div className="flex flex-col h-screen justify-center items-center bg-gradient-to-b from-gray-300 to-green-400">
+      <div className="pb-96 flex flex-col justify-center items-center">
         <div className="text-center p-5 max-w-3xl w-full">
-          <h1 className="text-2xl font-bold text-white">Query Page</h1>
-          <p className="text-sm text-white mt-2">
+          <h1 className="text-5xl font-bold text-white">Search</h1>
+          <p className="text-lg text-white my-4">
             Here you can perform searches or submit queries to find specific
             information or resources.
           </p>
-          <div className="mt-4 flex justify-center">
-            <form className="flex items-center" onSubmit={handleSearchSubmit}>
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className="w-48 p-2 rounded-l-md border border-gray-300"
-              />
-              <button
-                type="submit"
-                className="px-3 py-2 rounded-r-md bg-blue-500 text-white"
-              >
-                Search
-              </button>
-            </form>
-            {/* {renderSearchResult()} */}
+          <div className="mt-4 flex justify-center pb-6">
+            <input
+              type="text"
+              placeholder="Search a Location..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-80 p-2 rounded-md border border-gray-300"
+            />
             <ul className="absolute z-10 list-none bg-white rounded shadow-lg mt-2 w-48">
               {suggestions.map((suggestion) => (
-                <li key={suggestion.id} className="w-48 p-2 hover:bg-gray-300 cursor-pointer" onClick={() => selectSuggestion(suggestion)}>
+                <li
+                  key={suggestion.id}
+                  className="w-48 p-2 hover:bg-gray-300 cursor-pointer"
+                  onClick={() => selectSuggestion(suggestion)}
+                >
                   {suggestion.place_name}
                 </li>
               ))}
             </ul>
             {searchResult && (
-              <div className="mt-4">
-                <h3>{searchResult.placeName}</h3>
-                <p>{searchResult.description}</p>
+              <div className="mt-4 border border-gray-300 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold">
+                  {searchResult.placeName}
+                </h3>
+                <p className="text-sm text-gray-600">
+                  {searchResult.description}
+                </p>
+                <p className="text-sm text-gray-600">
+                  Population Density: {searchResult.populationDensity}
+                </p>
+                <p className="text-sm text-gray-600">
+                  Seismic Activity: {searchResult.seismicActivity}
+                </p>
+                <p className="text-sm text-gray-600">
+                  Terrain Type: {searchResult.terrainType}
+                </p>
               </div>
             )}
           </div>
         </div>
-        {/* <div ref={mapContainerRef} style={{ height: '400px', width: '75%' }} /> */}
-        <div id="map" style={{ height: "400px", width: "75%" }} />
-        {/* <GrayBox /> */}
+        <div id="map" style={{ height: "400px", width: "80%" }} />
       </div>
     </>
   );
