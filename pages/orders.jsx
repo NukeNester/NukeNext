@@ -94,7 +94,7 @@ export default function Orders() {
           </div>
         </Dialog>
       </Transition.Root>
-      <div className="pt-36">
+      <div className="py-36">
         <div className="flex flex-col mx-auto max-w-7xl px-6 lg:px-8">
           <div className=" mx-auto max-w-4xl text-center pb-96">
             <h1 className="text-5xl font-bold  text-white sm:text-6xl">
@@ -106,20 +106,20 @@ export default function Orders() {
             <div className="mt-10 flex items-center justify-center gap-x-6 pb-20">
               <button
                 onClick={executeScroll}
-                className="rounded-md px-6 py-1.5 text-lg font-semibold text-white border border-white hover:bg-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                className="rounded-md px-6 py-1.5 text-lg shadow-sm font-semibold text-white border border-white hover:bg-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
               >
                 View Orders
               </button>
               <button
                 onClick={() => setPopupOpen(true)}
-                className="rounded-md px-6 py-1.5 text-lg font-semibold text-white border border-white hover:bg-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                className="rounded-md px-6 py-1.5 text-lg shadow-sm font-semibold text-white border border-white hover:bg-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
               >
                 Place an Order
               </button>
             </div>
           </div>
-          <div className="mt-48 pb-80 flex flex-col justify-center" ref={myRef}>
-            <div>
+          <div className="pb-96 flex flex-col justify-center" ref={myRef}>
+            <div className="mt-12">
               <h1 className="pt-16 text-5xl font-bold text-white text-center">
                 {orders && orders.length > 0 ? "Your Orders" : "No Orders."}
               </h1>
