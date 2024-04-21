@@ -44,14 +44,14 @@ export default function Statistics() {
   return (
     <>
       <Head>
-        <title>Profile Statistics</title>
+        <title>Statistics</title>
       </Head>
       <Header isLoggedIn={isLoggedIn} handleLogIn={redirectToLoginPage} handleLogOut={logout} />
-      <div className="relative min-h-screen p-4 flex justify-center items-center">
+      <div className="relative p-4 pb-72 flex justify-center items-center">
         {/* Centering content in a flex container */}
-        <div className="flex flex-col items-center w-full max-w-4xl">
-          <h1 className="text-3xl font-bold text-white mb-4">
-            Profile Statistics
+        <div className="flex flex-col items-center w-full max-w-4xl ">
+          <h1 className="text-5xl font-bold text-white mb-10">
+            Your Statistics
           </h1>
           {/* Flex container for the stats components horizontally aligned */}
           <div className="flex w-full mb-6">
