@@ -7,7 +7,7 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
 //mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 function GrayBox() {
-    const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [map, setMap] = useState(null);
   const [searchResult, setSearchResult] = useState(null); // State to hold search result
 
@@ -171,13 +171,10 @@ function GrayBox() {
 
     return (
         
-        <div className="bg-white w-3/4 h-3/4 rounded-lg shadow flex justify-center items-center">
-
-            {/* Placeholder for map or other content */}
-            {/* <div id="map" style={{ height: 400 }} /> */}
-            
-            <div id="map" style={{ height: "575px", width: "100%" }} />
-        </div>
+      <div className="bg-white w-full h-3/4 rounded-lg shadow flex justify-center items-center">
+      {/* Placeholder for map or other content */}
+      <div id="map" style={{ height: "575px", width: "100%" }} />
+    </div>
     );
 }
 

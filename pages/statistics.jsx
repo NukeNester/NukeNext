@@ -5,6 +5,8 @@ import LineGraph from "./components/LineGraph";
 import GrayBox from "./components/GrayBox";
 import Header from "./components/Header";
 import React, { useRef } from "react";
+import wasteData from './data/wasteData.json';
+
 import {
   withAuthInfo,
   useLogoutFunction,
@@ -36,12 +38,12 @@ export default function Statistics() {
         {/* Main content */}
         <div className="flex justify-between items-start">
           {/* Left column for stats */}
-          <div className="flex flex-col gap-4 w-1/2 p-4">
+          <div className="flex flex-col gap-8 w-1/2 p-4">
             <div className="flex justify-between">
-              <WasteStats />
-              <EmissionsSaved />
+            <WasteStats wasteData={wasteData} />
+            <EmissionsSaved wasteData={wasteData} />
             </div>
-            <LineGraph />
+            <LineGraph wasteData={wasteData} />
           </div>
           
           {/* Right column for the map */}
