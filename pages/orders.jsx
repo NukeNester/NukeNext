@@ -49,12 +49,19 @@ export default function Orders() {
   };
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
     getOrders();
   }, []);
 
   const executeScroll = () => {
     myRef.current.scrollIntoView({ behavior: "smooth" });
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
